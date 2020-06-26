@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Request from './controllers/requestController';
-
+import * as UserController from './controllers/UserController';
+import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
 
@@ -9,9 +10,11 @@ router.get('/', (req, res) => {
 });
 
 // /your routes will go here
+router.post('/signin', requireSignin, UserController.signin);
+router.post('/signup', UserController.signup);
 
 router.route('/requests')
-  .post(Request.createRequest)
+  .post(requireAuth, Request.createRequest)
   .get(Request.getRequests);
 
 export default router;
