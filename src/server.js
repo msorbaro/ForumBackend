@@ -3,9 +3,18 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
+import apiRouter from './router';
+
 
 // initialize
 const app = express();
+
+// DB Setup
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/forum';
+mongoose.connect(mongoURI);
+// set mongoose promises to es6 default
+mongoose.Promise = global.Promise;
 
 // enable/disable cross origin resource sharing if necessary
 app.use(cors());
@@ -27,11 +36,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // additional init stuff should go before hitting the routing
+app.use('/api', apiRouter);
+
 
 // default index route
 app.get('/', (req, res) => {
   res.send('hi');
 });
+
 
 // START THE SERVER
 // =============================================================================
