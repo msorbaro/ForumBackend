@@ -4,7 +4,10 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import apiRouter from './router';
+
+dotenv.config({ silent: true });
 
 
 // initialize

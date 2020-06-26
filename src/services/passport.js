@@ -1,8 +1,12 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import dotenv from 'dotenv';
+
 
 import User from '../models/userModel';
+
+dotenv.config({ silent: true });
 
 // loads in .env file if needed
 // dotenv.config({ silent: true });

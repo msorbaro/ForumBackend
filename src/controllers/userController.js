@@ -1,6 +1,11 @@
 import jwt from 'jwt-simple';
+import dotenv from 'dotenv';
+
 
 import User from '../models/userModel';
+
+dotenv.config({ silent: true });
+
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
