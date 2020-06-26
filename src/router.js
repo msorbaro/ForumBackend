@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as Request from './controllers/requestController';
-import * as UserController from './controllers/UserController';
+import * as UserController from './controllers/userController';
 import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
