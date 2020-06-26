@@ -16,14 +16,14 @@ function tokenForUser(user) {
 export const signin = (req, res, next) => {
   // User has already had their email and password auth'd
   // We just need to give them a token
-  res.send({ token: tokenForUser(req.user), username: req.user.username, email: req.user.email });
+  res.send({ token: tokenForUser(req.user), email: req.user.email });
 };
 
 
 export const signup = (req, res, next) => {
   const { email } = req.body;
   const { password } = req.body;
-  const { username } = req.body;
+  const { firstName, lastName, school } = req.body;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
@@ -39,12 +39,16 @@ export const signup = (req, res, next) => {
     const user = new User({
       email,
       password,
-      username,
+      firstName,
+      lastName,
+      school,
+      verfied: false,
+      debator: false,
     });
     return user.save();
   })
     .then((user) => {
-      res.json({ token: tokenForUser(user), username, email });
+      res.json({ token: tokenForUser(user), email });
     })
     .catch((error) => {
       return res.status(422).send({ error });
