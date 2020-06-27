@@ -8,9 +8,9 @@ const UserSchema = new Schema({
   password: String,
   firstName: String,
   lastName: String,
-  verified: Boolean,
-  debator: Boolean,
+  status: String,
   school: String,
+  bio: String,
 });
 
 UserSchema.set('toJSON', {
@@ -49,6 +49,7 @@ UserSchema.pre('save', function beforeUserSave(next) {
 // note use of named function rather than arrow notation
 //  this arrow notation is lexically scoped and prevents binding scope, which mongoose relies on
 UserSchema.methods.comparePassword = function comparePassword(candidatePassword, callback) {
+  console.log('Comparing password');
   bcrypt.compare(candidatePassword, this.password).then((result) => {
     callback(null, result);
   }).catch((error) => {

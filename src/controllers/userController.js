@@ -16,6 +16,7 @@ function tokenForUser(user) {
 export const signin = (req, res, next) => {
   // User has already had their email and password auth'd
   // We just need to give them a token
+  console.log('in this method');
   res.send({ token: tokenForUser(req.user), email: req.user.email });
 };
 
@@ -23,7 +24,15 @@ export const signin = (req, res, next) => {
 export const signup = (req, res, next) => {
   const { email } = req.body;
   const { password } = req.body;
-  const { firstName, lastName, school } = req.body;
+  const {
+    firstName, lastName, school, debateApp,
+  } = req.body;
+  let status = 'NOT_DEBATOR';
+  let bio = '';
+  if (debateApp) {
+    status = 'PENDING';
+    bio = req.body.bio;
+  }
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
@@ -42,8 +51,8 @@ export const signup = (req, res, next) => {
       firstName,
       lastName,
       school,
-      verfied: false,
-      debator: false,
+      status,
+      bio,
     });
     return user.save();
   })
@@ -55,4 +64,14 @@ export const signup = (req, res, next) => {
     });
 
   return null;
+};
+
+export const getPendingStatus = (req, res) => {
+  User.find({ status: 'PENDING' })
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 };
