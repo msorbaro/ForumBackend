@@ -28,7 +28,7 @@ router.route('/getPending')
   .get(UserController.getPendingStatus);
 
 router.route('/getUser')
-  .get(UserController.getUserByEmail);
+  .post(UserController.getUserByEmail);
 
 router.route('/getApproved')
   .get(UserController.getApprovedUsers);
