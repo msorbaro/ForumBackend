@@ -84,6 +84,9 @@ export const updateStatus = (req, res) => {
       console.log(post);
       console.log('this was found');
       post.status = req.body.status;
+      console.log(post.status);
+      console.log('status after changing ^');
+      console.log(req.body);
     })
     .then((post) => {
       console.log('trying to send');
