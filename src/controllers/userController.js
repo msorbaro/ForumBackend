@@ -87,6 +87,8 @@ export const getApprovedUsers = (req, res) => {
 };
 
 export const getUserByEmail = (req, res) => {
+  console.log(req.body);
+  console.log(req.body.email);
   User.find({ email: req.body.email })
     .then((post) => {
       res.json(post);
