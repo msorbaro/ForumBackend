@@ -17,4 +17,7 @@ router.route('/requests')
   .post(requireAuth, Request.createRequest)
   .get(Request.getRequests);
 
+router.route('/getPending')
+  .get(UserController.getPendingStatus);
+
 export default router;
