@@ -20,6 +20,9 @@ router.route('/requests')
 router.route('/requests/:id')
   .put(Request.addVote);
 
+router.route('/requestsByVotes')
+  .get(Request.getRequestsByVotes);
+
 
 router.route('/getPending')
   .get(UserController.getPendingStatus);
