@@ -20,6 +20,9 @@ router.route('/requests')
 router.route('/getPending')
   .get(UserController.getPendingStatus);
 
+router.route('/getApproved')
+  .get(UserController.getApprovedUsers);
+
 router.route('/getPending/:id')
   .put(UserController.updateStatus);
 

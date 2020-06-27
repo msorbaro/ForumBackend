@@ -76,6 +76,16 @@ export const getPendingStatus = (req, res) => {
     });
 };
 
+export const getApprovedUsers = (req, res) => {
+  User.find({ status: 'APPROVED' })
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 export const updateStatus = (req, res) => {
   console.log(req.params.id);
   console.log('ABove is ID');
