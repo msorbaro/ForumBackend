@@ -14,7 +14,7 @@ router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
 
 router.route('/requests')
-  .post(requireAuth, Request.createRequest)
+  .post(Request.createRequest)
   .get(Request.getRequests);
 
 router.route('/getPending')
