@@ -4,7 +4,7 @@ import RequestModel from '../models/requestModel';
 export const createRequest = (req, res) => {
   console.log('HERE');
   const post = new RequestModel();
-  post.numRequests = 0;
+  post.numRequests = 1;
   post.topic = req.body.topic;
   post.person1 = req.body.person1;
   post.person2 = req.body.person2;
@@ -38,6 +38,20 @@ export const getRequests = (req, res) => {
     });
 };
 
+export const addVote = (req, res) => {
+  RequestModel.findById(req.params.id)
+    .then((post) => {
+      post.numRequests += 1;
+      return post.save();
+    })
+    .then((post) => {
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
+
 // export const getPost = (req, res) => {
 //   Post.findById(req.params.id).populate('author')
 //     .then((post) => {
@@ -58,16 +72,3 @@ export const getRequests = (req, res) => {
 //     });
 // };
 //
-export const addVote = (req, res) => {
-  RequestModel.findById(req.params.id)
-    .then((post) => {
-      post.numRequests += 1;
-      return post.save();
-    })
-    .then((post) => {
-      res.send(post);
-    })
-    .catch((error) => {
-      res.status(422).json({ error });
-    });
-};
