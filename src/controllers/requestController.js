@@ -52,6 +52,7 @@ export const addVote = (req, res) => {
   RequestModel.findById(req.params.id)
     .then((post) => {
       post.numRequests += 1;
+      post.requestUsers.push({ email: req.body.email, date: new Date() });
       return post.save();
     })
     .then((post) => {
