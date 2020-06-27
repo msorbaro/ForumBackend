@@ -86,6 +86,16 @@ export const getApprovedUsers = (req, res) => {
     });
 };
 
+export const getUserByEmail = (req, res) => {
+  User.find({ email: req.body.email })
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 export const updateStatus = (req, res) => {
   console.log(req.params.id);
   console.log('ABove is ID');
