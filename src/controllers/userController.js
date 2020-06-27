@@ -77,11 +77,16 @@ export const getPendingStatus = (req, res) => {
 };
 
 export const updateStatus = (req, res) => {
+  console.log(req.params.id);
+  console.log('ABove is ID');
   User.findById(req.params.id)
     .then((post) => {
+      console.log(post);
+      console.log('this was found');
       post.status = post.req.body.status;
     })
     .then((post) => {
+      console.log('trying to send');
       res.send(post);
     })
     .catch((error) => {
