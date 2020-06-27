@@ -75,3 +75,16 @@ export const getPendingStatus = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
+export const updateStatus = (req, res) => {
+  User.findById(req.params.id)
+    .then((post) => {
+      post.status = post.req.body.status;
+    })
+    .then((post) => {
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};

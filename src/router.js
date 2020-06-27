@@ -18,6 +18,8 @@ router.route('/requests')
   .get(Request.getRequests);
 
 router.route('/getPending')
-  .get(UserController.getPendingStatus);
+  .get(UserController.getPendingStatus)
+  .put(UserController.updateStatus);
+
 
 export default router;
