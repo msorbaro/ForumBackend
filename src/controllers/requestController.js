@@ -25,7 +25,7 @@ export const createRequest = (req, res) => {
 export const getRequests = (req, res) => {
   console.log('here');
   console.log('AGAIN');
-  RequestModel.find({}, null, { sort: { created_at: -1 } })
+  RequestModel.find({}, null, { sort: { created_at: -1 } }).limit(5)
     .then((posts) => {
       console.log('here2');
       console.log(posts);
