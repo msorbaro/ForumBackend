@@ -87,6 +87,7 @@ export const updateStatus = (req, res) => {
       console.log(post.status);
       console.log('status after changing ^');
       console.log(req.body);
+      return post.save();
     })
     .then((post) => {
       console.log('trying to send');
