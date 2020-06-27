@@ -58,24 +58,16 @@ export const getRequests = (req, res) => {
 //     });
 // };
 //
-// export const updatePost = (req, res) => {
-//   Post.findById(req.params.id).populate('author')
-//     .then((post) => {
-//       if (post.author.id === req.user.id) {
-//         post.title = (req.body.title) ? req.body.title : post.title;
-//         post.tags = (req.body.tags) ? req.body.tags : post.tags;
-//         post.content = (req.body.content) ? req.body.content : post.content;
-//         post.cover_url = (req.body.cover_url) ? req.body.cover_url : post.cover_url;
-//         return post.save();
-//       } else {
-//         console.log('different authors');
-//         throw new Error('you don\'t have permission to edit this post');
-//       }
-//     })
-//     .then((post) => {
-//       res.send(post);
-//     })
-//     .catch((error) => {
-//       res.status(422).json({ error });
-//     });
-// };
+export const addVote = (req, res) => {
+  RequestModel.findById(req.params.id)
+    .then((post) => {
+      post.numRequests += 1;
+      return post.save();
+    })
+    .then((post) => {
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
