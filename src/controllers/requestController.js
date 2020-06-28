@@ -32,7 +32,7 @@ export const getRequests = (req, res) => {
 };
 
 export const getRequestsByVotes = (req, res) => {
-  RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(5)
+  RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
     .then((posts) => {
       res.json(posts);
     })
