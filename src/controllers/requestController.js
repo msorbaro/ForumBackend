@@ -33,8 +33,14 @@ export const createRequestNew = (req, res) => {
         const currpost = posts[0];
         currpost.numRequests += 1;
         currpost.requestUsers.push({ email: req.body.requesterEmail, date: new Date() });
-        return currpost.save();
-      } else if (posts.length === 0) {
+        return currpost.save()
+          .then((post) => {
+            res.send(post);
+          })
+          .catch((error) => {
+            res.status(422).json({ error });
+          });
+      } else {
         const post = new RequestModel();
         post.numRequests = 1;
         post.topic = req.body.topic;
@@ -44,7 +50,7 @@ export const createRequestNew = (req, res) => {
         post.person1Email = req.body.person1Email;
         post.person2Email = req.body.person2Email;
         post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
-        post.save()
+        return post.save()
           .then((result) => {
             res.json(result);
           })
@@ -53,7 +59,6 @@ export const createRequestNew = (req, res) => {
             console.log(error);
           });
       }
-      return null;
     })
     .catch((error) => {
       res.status(500).json({ error });
