@@ -8,6 +8,8 @@ export const createRequest = (req, res) => {
   post.person1 = req.body.person1;
   post.person2 = req.body.person2;
   post.date = new Date();
+  post.person1Email = req.body.person1Email;
+  post.person2Email = req.body.person2Email;
   post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
   post.save()
     .then((result) => {
@@ -53,16 +55,16 @@ export const addVote = (req, res) => {
       res.status(422).json({ error });
     });
 };
-//
-// export const getRequestsForUser = (req, res) => {
-//   RequestModel.find({ $or: [{ person1: req.body. }, { breed: 'Pugg' }, { age: 2 }] }).limit(5)
-//     .then((posts) => {
-//       res.json(posts);
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
-// };
+
+export const getRequestsForUser = (req, res) => {
+  RequestModel.find({ $or: [{ person1Email: req.body.person1Email }, { person2Email: req.body.person2Email }] }).limit(5)
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
 
 // export const getPost = (req, res) => {
 //   Post.findById(req.params.id).populate('author')
