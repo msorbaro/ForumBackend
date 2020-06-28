@@ -57,7 +57,7 @@ export const addVote = (req, res) => {
 };
 
 export const getRequestsForUser = (req, res) => {
-  RequestModel.find({ $or: [{ person1Email: req.body.person1Email }, { person2Email: req.body.person2Email }] }).limit(5)
+  RequestModel.find({ $or: [{ person1Email: req.body.email }, { person2Email: req.body.email }] }).limit(5)
     .then((posts) => {
       res.json(posts);
     })
