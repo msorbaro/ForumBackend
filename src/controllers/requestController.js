@@ -21,6 +21,44 @@ export const createRequest = (req, res) => {
     });
 };
 
+export const createRequestNew = (req, res) => {
+  RequestModel.find({
+    $or: [{ person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic },
+      { person1Email: req.body.person2Email, person2Email: req.body.person1Email, topic: req.body.topic }],
+  })
+    .then((posts) => {
+      // res.json(posts);
+      console.log(posts);
+      if (posts.length === 1) {
+        console.log('in one');
+      } else if (posts.length === 0) {
+        console.log('in 0');
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+
+  // const post = new RequestModel();
+  // post.numRequests = 1;
+  // post.topic = req.body.topic;
+  // post.person1 = req.body.person1;
+  // post.person2 = req.body.person2;
+  // post.date = new Date();
+  // post.person1Email = req.body.person1Email;
+  // post.person2Email = req.body.person2Email;
+  // post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
+  // post.save()
+  //   .then((result) => {
+  //     res.json(result);
+  //   })
+  //   .catch((error) => {
+  //     res.status(500).json({ error });
+  //     console.log(error);
+  //   });
+};
+
+
 export const getRequests = (req, res) => {
   RequestModel.find({}, null, { sort: { numRequests: -1 } }).limit(5)
     .then((posts) => {

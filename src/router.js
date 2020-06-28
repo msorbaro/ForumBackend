@@ -39,4 +39,7 @@ router.route('/getPending/:id')
 router.route('/getUserRequests')
   .post(Request.getRequestsForUser);
 
+router.route('/testRoute')
+  .post(Request.createRequestNew);
+
 export default router;
