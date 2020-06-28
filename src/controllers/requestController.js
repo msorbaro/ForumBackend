@@ -30,32 +30,34 @@ export const createRequestNew = (req, res) => {
       // res.json(posts);
       console.log(posts);
       if (posts.length === 1) {
-        console.log('in one');
+        const currpost = posts[0];
+        currpost.numRequests += 1;
+        currpost.requestUsers.push({ email: req.body.requesterEmail, date: new Date() });
+        return currpost.save();
       } else if (posts.length === 0) {
-        console.log('in 0');
+        const post = new RequestModel();
+        post.numRequests = 1;
+        post.topic = req.body.topic;
+        post.person1 = req.body.person1;
+        post.person2 = req.body.person2;
+        post.date = new Date();
+        post.person1Email = req.body.person1Email;
+        post.person2Email = req.body.person2Email;
+        post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
+        post.save()
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+            console.log(error);
+          });
       }
+      return null;
     })
     .catch((error) => {
       res.status(500).json({ error });
     });
-
-  // const post = new RequestModel();
-  // post.numRequests = 1;
-  // post.topic = req.body.topic;
-  // post.person1 = req.body.person1;
-  // post.person2 = req.body.person2;
-  // post.date = new Date();
-  // post.person1Email = req.body.person1Email;
-  // post.person2Email = req.body.person2Email;
-  // post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
-  // post.save()
-  //   .then((result) => {
-  //     res.json(result);
-  //   })
-  //   .catch((error) => {
-  //     res.status(500).json({ error });
-  //     console.log(error);
-  //   });
 };
 
 
