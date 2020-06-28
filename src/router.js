@@ -36,4 +36,7 @@ router.route('/getApproved')
 router.route('/getPending/:id')
   .put(UserController.updateStatus);
 
+router.route('/getUserRequests')
+  .post(Request.getRequestsForUser);
+
 export default router;
