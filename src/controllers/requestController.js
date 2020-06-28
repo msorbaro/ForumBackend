@@ -27,8 +27,6 @@ export const createRequestNew = (req, res) => {
       { person1Email: req.body.person2Email, person2Email: req.body.person1Email, topic: req.body.topic }],
   })
     .then((posts) => {
-      // res.json(posts);
-      // console.log(posts);
       if (posts.length === 1) {
         const currpost = posts[0];
         currpost.numRequests += 1;
@@ -56,7 +54,6 @@ export const createRequestNew = (req, res) => {
           })
           .catch((error) => {
             res.status(500).json({ error });
-            console.log(error);
           });
       }
     })
