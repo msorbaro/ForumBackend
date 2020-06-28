@@ -28,7 +28,7 @@ export const createRequestNew = (req, res) => {
   })
     .then((posts) => {
       // res.json(posts);
-      console.log(posts);
+      // console.log(posts);
       if (posts.length === 1) {
         const currpost = posts[0];
         currpost.numRequests += 1;

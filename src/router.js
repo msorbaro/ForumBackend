@@ -14,7 +14,7 @@ router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
 
 router.route('/requests')
-  .post(Request.createRequest)
+  .post(Request.createRequestNew)
   .get(Request.getRequests);
 
 router.route('/requests/:id')
@@ -38,8 +38,5 @@ router.route('/getPending/:id')
 
 router.route('/getUserRequests')
   .post(Request.getRequestsForUser);
-
-router.route('/testRoute')
-  .post(Request.createRequestNew);
 
 export default router;
