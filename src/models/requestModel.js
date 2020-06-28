@@ -6,6 +6,8 @@ const RequestSchema = new Schema({
   topic: String,
   person1: String,
   person2: String,
+  person2Email: String,
+  person1Email: String,
   date: { type: Date, default: Date.now },
   requestUsers: [{ email: String, date: Date }],
   //  apikey: String, // primitive method for keeping multiple projects separate

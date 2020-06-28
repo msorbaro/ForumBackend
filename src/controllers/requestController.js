@@ -2,7 +2,6 @@ import RequestModel from '../models/requestModel';
 
 
 export const createRequest = (req, res) => {
-  console.log('HERE');
   const post = new RequestModel();
   post.numRequests = 1;
   post.topic = req.body.topic;
@@ -10,10 +9,8 @@ export const createRequest = (req, res) => {
   post.person2 = req.body.person2;
   post.date = new Date();
   post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
-  console.log('did all tjhis stuff');
   post.save()
     .then((result) => {
-      console.log('HERE finalize');
       res.json(result);
     })
     .catch((error) => {
@@ -23,17 +20,11 @@ export const createRequest = (req, res) => {
 };
 
 export const getRequests = (req, res) => {
-  console.log('here');
-  console.log('AGAIN');
   RequestModel.find({}, null, { sort: { numRequests: -1 } }).limit(5)
     .then((posts) => {
-      console.log('here2');
-      console.log(posts);
       res.json(posts);
     })
     .catch((error) => {
-      console.log('erroring');
-      console.log(error);
       res.status(500).json({ error });
     });
 };
@@ -62,6 +53,16 @@ export const addVote = (req, res) => {
       res.status(422).json({ error });
     });
 };
+//
+// export const getRequestsForUser = (req, res) => {
+//   RequestModel.find({ $or: [{ person1: req.body. }, { breed: 'Pugg' }, { age: 2 }] }).limit(5)
+//     .then((posts) => {
+//       res.json(posts);
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ error });
+//     });
+// };
 
 // export const getPost = (req, res) => {
 //   Post.findById(req.params.id).populate('author')
