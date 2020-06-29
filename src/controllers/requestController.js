@@ -1,4 +1,5 @@
 import RequestModel from '../models/requestModel';
+import Debate from '../models/debateModel';
 
 
 export const createRequest = (req, res) => {
@@ -48,9 +49,23 @@ export const createRequestNew = (req, res) => {
         post.person1Email = req.body.person1Email;
         post.person2Email = req.body.person2Email;
         post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
+        post.person1ID = req.body.person1ID;
+        post.person2ID = req.body.person2ID;
         return post.save()
           .then((result) => {
-            res.json(result);
+            console.log('I am the resulting request');
+            console.log(result);
+            const debate = new Debate();
+            debate.requestID = result._id;
+            debate.person1Email = result.person1Email;
+            debate.person2Email = result.person2Emaill;
+            return debate.save()
+              .then((result2) => {
+                res.json(result2);
+              })
+              .catch((error) => {
+                res.status(500).json({ error });
+              });
           })
           .catch((error) => {
             res.status(500).json({ error });
@@ -64,7 +79,7 @@ export const createRequestNew = (req, res) => {
 
 
 export const getRequests = (req, res) => {
-  RequestModel.find({}, null, { sort: { numRequests: -1 } }).limit(5)
+  RequestModel.find({}, null, { sort: { numRequests: -1 } }).limit(5).populate('person1ID').populate('person2ID')
     .then((posts) => {
       res.json(posts);
     })

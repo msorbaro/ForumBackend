@@ -10,7 +10,8 @@ const RequestSchema = new Schema({
   person1Email: String,
   date: { type: Date, default: Date.now },
   requestUsers: [{ email: String, date: Date }],
-  //  apikey: String, // primitive method for keeping multiple projects separate
+  person1ID: { type: Schema.Types.ObjectId, ref: 'User' },
+  person2ID: { type: Schema.Types.ObjectId, ref: 'User' }, //  apikey: String, // primitive method for keeping multiple projects separate
 });
 
 RequestSchema.set('toJSON', {

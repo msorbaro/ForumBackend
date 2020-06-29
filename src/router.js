@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Request from './controllers/requestController';
 import * as UserController from './controllers/userController';
+import * as Debate from './controllers/debateController';
 import { requireSignin } from './services/passport';
 
 const router = Router();
@@ -38,5 +39,19 @@ router.route('/getPending/:id')
 
 router.route('/getUserRequests')
   .post(Request.getRequestsForUser);
+
+router.route('/debates')
+  .post(Debate.createDebate)
+  .get(Debate.getDebates);
+
+router.route('/userDebates')
+  .get(Debate.getPendingDebatesForUser);
+
+router.route('/editDebateStatus/:id')
+  .put(Debate.changePersonsDebateStatus);
+
+router.route('/userRejectedDebates')
+  .get(Debate.getForfittedDebatesForUser);
+
 
 export default router;
