@@ -45,13 +45,15 @@ router.route('/debates')
   .get(Debate.getDebates);
 
 router.route('/userDebates')
-  .get(Debate.getPendingDebatesForUser);
+  .post(Debate.getPendingDebatesForUser);
 
 router.route('/editDebateStatus/:id')
   .put(Debate.changePersonsDebateStatus);
 
 router.route('/userRejectedDebates')
-  .get(Debate.getForfittedDebatesForUser);
+  .post(Debate.getForfittedDebatesForUser);
 
+router.route('/userActiveDebates')
+  .post(Debate.getActiveDebatesForUser);
 
 export default router;

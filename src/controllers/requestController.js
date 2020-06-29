@@ -25,7 +25,7 @@ export const createRequest = (req, res) => {
 export const createRequestNew = (req, res) => {
   RequestModel.find({
     $or: [{ person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic },
-      { person1Email: req.body.person2Email, person2Email: req.body.person1Email, topic: req.body.topic }],
+      { person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic }],
   })
     .then((posts) => {
       if (posts.length === 1) {
@@ -51,10 +51,13 @@ export const createRequestNew = (req, res) => {
         post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
         post.person1ID = req.body.person1ID;
         post.person2ID = req.body.person2ID;
+        console.log(post);
         return post.save()
           .then((result) => {
             console.log(result);
             const debate = new Debate();
+            console.log('I am now trying to get the debate ID');
+            console.log(result._id);
             debate.requestID = result._id;
             debate.person1Email = result.person1Email;
             debate.person2Email = result.person2Email;

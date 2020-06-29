@@ -36,7 +36,8 @@ export const getDebates = (req, res) => {
 };
 
 export const getPendingDebatesForUser = (req, res) => {
-  Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'PENDING' }, { person2Email: req.body.email, person1Status: 'PENDING' }] }).populate({
+  console.log(req.body.email);
+  Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'PENDING' }, { person2Email: req.body.email, person2Status: 'PENDING' }] }).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
@@ -48,6 +49,8 @@ export const getPendingDebatesForUser = (req, res) => {
     },
   })
     .then((posts) => {
+      console.log('in here');
+      console.log(posts);
       res.json(posts);
     })
     .catch((error) => {
@@ -85,8 +88,7 @@ export const changePersonsDebateStatus = (req, res) => {
 export const getForfittedDebatesForUser = (req, res) => {
   Debate.find({
     $or: [{ person1Email: req.body.email, person1Status: 'REJECTED' },
-      { person2Email: req.body.email, person1Status: 'REJECTED' }],
-    overallStatus: { $not: { $eq: 'REJECTED' } },
+      { person2Email: req.body.email, person2Status: 'REJECTED' }],
   }).populate({
     path: 'requestID',
     populate: {
@@ -107,7 +109,12 @@ export const getForfittedDebatesForUser = (req, res) => {
 };
 
 export const getActiveDebatesForUser = (req, res) => {
-  Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'ACCEPTED' }, { person2Email: req.body.email, person1Status: 'ACCEPTED' }] }).populate({
+  Debate.find({
+    $or: [{ person1Email: req.body.email, person1Status: 'ACCEPTED', overallStatus: 'PENDING_ACCEPTANCE' },
+      { person2Email: req.body.email, person2Status: 'ACCEPTED', overallStatus: 'PENDING_ACCEPTANCE' },
+      { person1Email: req.body.email, person1Status: 'ACCEPTED', overallStatus: 'PENDING_VIDEO' },
+      { person2Email: req.body.email, person2Status: 'ACCEPTED', overallStatus: 'PENDING_VIDEO' }],
+  }).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
