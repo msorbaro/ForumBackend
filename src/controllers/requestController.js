@@ -53,12 +53,11 @@ export const createRequestNew = (req, res) => {
         post.person2ID = req.body.person2ID;
         return post.save()
           .then((result) => {
-            console.log('I am the resulting request');
             console.log(result);
             const debate = new Debate();
             debate.requestID = result._id;
             debate.person1Email = result.person1Email;
-            debate.person2Email = result.person2Emaill;
+            debate.person2Email = result.person2Email;
             return debate.save()
               .then((result2) => {
                 res.json(result2);

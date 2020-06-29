@@ -83,7 +83,31 @@ export const changePersonsDebateStatus = (req, res) => {
 
 
 export const getForfittedDebatesForUser = (req, res) => {
-  Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'REJECTED' }, { person2Email: req.body.email, person1Status: 'REJECTED' }] }).populate({
+  Debate.find({
+    $or: [{ person1Email: req.body.email, person1Status: 'REJECTED' },
+      { person2Email: req.body.email, person1Status: 'REJECTED' }],
+    overallStatus: { $not: { $eq: 'REJECTED' } },
+  }).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person1ID',
+    },
+  }).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person2ID',
+    },
+  })
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const getActiveDebatesForUser = (req, res) => {
+  Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'ACCEPTED' }, { person2Email: req.body.email, person1Status: 'ACCEPTED' }] }).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
