@@ -53,6 +53,9 @@ router.route('/editDebateStatus/:id')
 router.route('/userRejectedDebates')
   .post(Debate.getForfittedDebatesForUser);
 
+router.route('/userCompletedDebates')
+  .post(Debate.getCompletedDebatesForUser);
+
 router.route('/userActiveDebates')
   .post(Debate.getActiveDebatesForUser);
 

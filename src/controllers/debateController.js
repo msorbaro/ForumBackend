@@ -195,6 +195,29 @@ export const goToNextDebateRound = (req, res) => {
     });
 };
 
+export const getCompletedDebatesForUser = (req, res) => {
+  // console.log(req.body.email);
+  Debate.find({ $or: [{ person1Email: req.body.email, overallStatus: 'COMPLETED' }, { person2Email: req.body.email, overallStatus: 'COMPLETED' }] }).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person1ID',
+    },
+  }).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person2ID',
+    },
+  })
+    .then((posts) => {
+      // console.log('in here');
+      // console.log(posts);
+      res.json(posts);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 
 // export const getRequestsByVotes = (req, res) => {
 //   RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
