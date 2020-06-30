@@ -16,7 +16,7 @@ export const createDebate = (req, res) => {
 
 
 export const getDebates = (req, res) => {
-  Debate.find({}, null, { sort: { numRequests: -1 } }).populate({
+  Debate.find({ overallStatus: 'COMPLETED' }, null, { sort: { numRequests: -1 } }).limit(10).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
