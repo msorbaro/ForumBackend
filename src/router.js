@@ -56,4 +56,8 @@ router.route('/userRejectedDebates')
 router.route('/userActiveDebates')
   .post(Debate.getActiveDebatesForUser);
 
+router.route('/oneDebate/:id')
+  .get(Debate.getOneDebate)
+  .put(Debate.goToNextDebateRound);
+
 export default router;

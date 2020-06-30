@@ -74,6 +74,13 @@ export const changePersonsDebateStatus = (req, res) => {
       if (post.personAcceptedFirst === '') {
         post.personAcceptedFirst = req.body.email;
       }
+      if (post.person1Status !== 'PENDING' && post.person2Status !== 'PENDING') {
+        if (post.person1Status === 'REJECTED' || post.person2Status === 'REJECTED') {
+          post.overallStatus = 'REJECTED';
+        } else {
+          post.overallStatus = 'PENDING_VIDEO';
+        }
+      }
       return post.save();
     })
     .then((post) => {
@@ -130,6 +137,61 @@ export const getActiveDebatesForUser = (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
+    });
+};
+
+export const getOneDebate = (req, res) => {
+  console.log(req.params.id);
+  Debate.findById(req.params.id).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person1ID',
+    },
+  }).populate({
+    path: 'requestID',
+    populate: {
+      path: 'person2ID',
+    },
+  })
+    .then((post) => {
+      console.log(post);
+      console.log('this is mypost');
+      res.json(post);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const goToNextDebateRound = (req, res) => {
+  // console.log(req.params.id);
+  // console.log('here');
+  Debate.findById(req.params.id)
+    .then((post) => {
+      if (req.body.round === 1) {
+        console.log('went to round 1');
+        post.firstVideoLink = req.body.link;
+      } else if (req.body.round === 2) {
+        console.log('went to round 2');
+        post.secondVideoLink = req.body.link;
+      } else if (req.body.round === 3) {
+        console.log('went to round 3');
+        post.thirdVideoLink = req.body.link;
+      } else if (req.body.round === 4) {
+        console.log('went to round 4');
+        post.fourthVideoLink = req.body.link;
+        post.overallStatus = 'COMPLETED';
+      }
+
+      return post.save();
+    })
+    .then((post) => {
+      console.log('made it to the bottom here');
+      console.log(post);
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
     });
 };
 
