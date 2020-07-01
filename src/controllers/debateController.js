@@ -10,7 +10,7 @@ export const createDebate = (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
-      console.log(error);
+    //  console.log(error);
     });
 };
 
@@ -36,7 +36,7 @@ export const getDebates = (req, res) => {
 };
 
 export const getPendingDebatesForUser = (req, res) => {
-  console.log(req.body.email);
+//  console.log(req.body.email);
   Debate.find({ $or: [{ person1Email: req.body.email, person1Status: 'PENDING' }, { person2Email: req.body.email, person2Status: 'PENDING' }] }).populate({
     path: 'requestID',
     populate: {
@@ -49,8 +49,8 @@ export const getPendingDebatesForUser = (req, res) => {
     },
   })
     .then((posts) => {
-      console.log('in here');
-      console.log(posts);
+      // console.log('in here');
+      // console.log(posts);
       res.json(posts);
     })
     .catch((error) => {
@@ -154,8 +154,8 @@ export const getOneDebate = (req, res) => {
     },
   })
     .then((post) => {
-      console.log(post);
-      console.log('this is mypost');
+      // console.log(post);
+      // console.log('this is mypost');
       res.json(post);
     })
     .catch((error) => {
@@ -164,21 +164,22 @@ export const getOneDebate = (req, res) => {
 };
 
 export const goToNextDebateRound = (req, res) => {
-  // console.log(req.params.id);
-  // console.log('here');
+  console.log(req.params.id);
+  console.log('here');
+  console.log(req.body);
   Debate.findById(req.params.id)
     .then((post) => {
       if (req.body.round === 1) {
-        console.log('went to round 1');
+        // console.log('went to round 1');
         post.firstVideoLink = req.body.link;
       } else if (req.body.round === 2) {
-        console.log('went to round 2');
+      //  console.log('went to round 2');
         post.secondVideoLink = req.body.link;
       } else if (req.body.round === 3) {
-        console.log('went to round 3');
+      //  console.log('went to round 3');
         post.thirdVideoLink = req.body.link;
       } else if (req.body.round === 4) {
-        console.log('went to round 4');
+      //  console.log('went to round 4');
         post.fourthVideoLink = req.body.link;
         post.overallStatus = 'COMPLETED';
       }
@@ -186,8 +187,8 @@ export const goToNextDebateRound = (req, res) => {
       return post.save();
     })
     .then((post) => {
-      console.log('made it to the bottom here');
-      console.log(post);
+      // console.log('made it to the bottom here');
+      // console.log(post);
       res.send(post);
     })
     .catch((error) => {

@@ -3,6 +3,7 @@ import * as Request from './controllers/requestController';
 import * as UserController from './controllers/userController';
 import * as Debate from './controllers/debateController';
 import { requireSignin } from './services/passport';
+import signS3 from './services/s3';
 
 const router = Router();
 
@@ -62,5 +63,7 @@ router.route('/userActiveDebates')
 router.route('/oneDebate/:id')
   .get(Debate.getOneDebate)
   .put(Debate.goToNextDebateRound);
+
+router.get('/sign-s3', signS3);
 
 export default router;

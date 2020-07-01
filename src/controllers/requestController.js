@@ -18,7 +18,7 @@ export const createRequest = (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
-      console.log(error);
+    //  console.log(error);
     });
 };
 
@@ -51,13 +51,13 @@ export const createRequestNew = (req, res) => {
         post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
         post.person1ID = req.body.person1ID;
         post.person2ID = req.body.person2ID;
-        console.log(post);
+        //  console.log(post);
         return post.save()
           .then((result) => {
-            console.log(result);
+          //  console.log(result);
             const debate = new Debate();
-            console.log('I am now trying to get the debate ID');
-            console.log(result._id);
+            // console.log('I am now trying to get the debate ID');
+            // console.log(result._id);
             debate.requestID = result._id;
             debate.person1Email = result.person1Email;
             debate.person2Email = result.person2Email;

@@ -16,7 +16,7 @@ function tokenForUser(user) {
 export const signin = (req, res, next) => {
   // User has already had their email and password auth'd
   // We just need to give them a token
-  console.log('in this method');
+  // console.log('in this method');
   res.send({ token: tokenForUser(req.user), email: req.user.email });
 };
 
@@ -87,8 +87,8 @@ export const getApprovedUsers = (req, res) => {
 };
 
 export const getUserByEmail = (req, res) => {
-  console.log(req.body);
-  console.log(req.body.email);
+  // console.log(req.body);
+  // console.log(req.body.email);
   User.find({ email: req.body.email })
     .then((post) => {
       res.json(post);
@@ -99,20 +99,20 @@ export const getUserByEmail = (req, res) => {
 };
 
 export const updateStatus = (req, res) => {
-  console.log(req.params.id);
-  console.log('ABove is ID');
+  // console.log(req.params.id);
+  // console.log('ABove is ID');
   User.findById(req.params.id)
     .then((post) => {
-      console.log(post);
-      console.log('this was found');
+      // console.log(post);
+      // console.log('this was found');
       post.status = req.body.status;
-      console.log(post.status);
-      console.log('status after changing ^');
-      console.log(req.body);
+      // console.log(post.status);
+      // console.log('status after changing ^');
+      // console.log(req.body);
       return post.save();
     })
     .then((post) => {
-      console.log('trying to send');
+    //  console.log('trying to send');
       res.send(post);
     })
     .catch((error) => {
