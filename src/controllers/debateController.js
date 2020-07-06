@@ -223,7 +223,7 @@ export const addDebateVote = (req, res) => {
   Debate.findById(req.params.id)
     .then((post) => {
       console.log(post);
-      console.log(req.body.id);
+      console.log(req.body.email);
       console.log(req.body.section);
       console.log(req.body.time);
       post.videoLikes.push({
@@ -232,6 +232,8 @@ export const addDebateVote = (req, res) => {
         section: req.body.section,
         time: req.body.time,
       });
+
+      console.log(post.videoLikes)
       return post.save();
     })
     .then((post) => {
