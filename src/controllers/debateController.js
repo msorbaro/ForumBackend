@@ -222,10 +222,10 @@ export const getCompletedDebatesForUser = (req, res) => {
 export const addDebateVote = (req, res) => {
   Debate.findById(req.params.id)
     .then((post) => {
-      console.log(post);
-      console.log(req.body.email);
-      console.log(req.body.section);
-      console.log(req.body.time);
+      // console.log(post);
+      // console.log(req.body.email);
+      // console.log(req.body.section);
+      // console.log(req.body.time);
       post.videoLikes.push({
         email: req.body.email,
         date: new Date(),
@@ -233,7 +233,7 @@ export const addDebateVote = (req, res) => {
         time: req.body.time,
       });
 
-      console.log(post.videoLikes)
+      // console.log(post.videoLikes)
       return post.save();
     })
     .then((post) => {
@@ -243,6 +243,30 @@ export const addDebateVote = (req, res) => {
       res.status(422).json({ error });
     });
 };
+
+export const checkIfUserLikesDebate = (req, res) => {
+  Debate.findById(req.params.id).aggregate([
+   {
+      $project: {
+         videoLikes: {
+            $filter: {
+               input: "$videoLikes",
+               as: "videoLikes",
+               cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
+            }
+         }
+      }
+   }
+]).then((debates) => {
+     //console.log(post.videoLikes)
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
+
+
 
 
 // export const getRequestsByVotes = (req, res) => {
