@@ -249,15 +249,13 @@ export const checkIfUserLikesDebate = (req, res) => {
   console.log("^ above is email")
   console.log(req.params.id)
   Debate.aggregate([
-   //{
-
-   //    $filter: {
-   //       input: "$videoLikes",
-   //       as: "videoLikes",
-   //       cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
-   //    }
-   // },
-   { $match : { id : req.params.id} }
+   {
+      $filter: {
+         input: "$videoLikes",
+         as: "videoLikes",
+         cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
+      }
+   },
 ])
 .then((debates)=> {
   console.log(debates);
