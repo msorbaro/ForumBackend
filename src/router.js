@@ -68,6 +68,6 @@ router.route('/oneDebate/:id')
 router.get('/sign-s3', signS3);
 
 router.route('/userDebateLikes/:id')
-  .get(Debate.checkIfUserLikesDebate)
+  .put(Debate.checkIfUserLikesDebate)
 
 export default router;
