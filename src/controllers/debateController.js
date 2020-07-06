@@ -248,7 +248,7 @@ export const checkIfUserLikesDebate = (req, res) => {
   console.log(req.body.email)
   console.log("^ above is email")
   Debate.aggregate([
-   {
+   //{
 
    //    $filter: {
    //       input: "$videoLikes",
