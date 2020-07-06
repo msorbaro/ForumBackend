@@ -257,9 +257,9 @@ export const checkIfUserLikesDebate = (req, res) => {
                cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
             }
          }
-      },
-      { $match : { _id : req.params.id} }
-   }
+      }
+   },
+   { $match : { _id : req.params.id} }
 ]).catch((error) => {
       res.status(422).json({ error });
     });
