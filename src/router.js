@@ -71,6 +71,6 @@ router.route('/userDebateLikes/:id')
   .put(Debate.checkIfUserLikesDebate)
 
 router.route('/sectionDebateLikes/:id')
-    .put(Debate.checkIfUserLikesDebate)
+    .put(Debate.getSectionLikes)
 
 export default router;
