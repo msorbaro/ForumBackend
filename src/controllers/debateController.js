@@ -249,13 +249,19 @@ export const checkIfUserLikesDebate = (req, res) => {
   console.log("^ above is email")
   Debate.aggregate([
    {
+
       $filter: {
          input: "$videoLikes",
          as: "videoLikes",
          cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
       }
    },
-]).catch((error) => {
+   { $match : { _id : req.params.id} }
+])
+.then((debates)=> {
+  res.send(debates);
+})
+.catch((error) => {
       res.status(422).json({ error });
     });
 };
