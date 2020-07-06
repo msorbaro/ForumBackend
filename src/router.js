@@ -70,4 +70,7 @@ router.get('/sign-s3', signS3);
 router.route('/userDebateLikes/:id')
   .put(Debate.checkIfUserLikesDebate)
 
+router.route('/sectionDebateLikes/:id')
+    .put(Debate.checkIfUserLikesDebate)
+
 export default router;

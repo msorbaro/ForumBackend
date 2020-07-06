@@ -245,9 +245,9 @@ export const addDebateVote = (req, res) => {
 };
 
 export const checkIfUserLikesDebate = (req, res) => {
-  console.log(req.body.email)
-  console.log("^ above is email")
-  console.log(req.params.id)
+  // console.log(req.body.email)
+  // console.log("^ above is email")
+  // console.log(req.params.id)
   Debate.find({
     _id: req.params.id,
     videoLikes: {
@@ -258,6 +258,26 @@ export const checkIfUserLikesDebate = (req, res) => {
 })
   .then((debates)=> {
     console.log(debates);
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
+
+export const getSectionLikes = (req, res) => {
+  // console.log(req.body.email)
+  // console.log("^ above is email")
+  // console.log(req.params.id)
+  Debate.find({
+    _id: req.params.id,
+    videoLikes: {
+      $elemMatch: {
+        section: req.body.section,
+      }
+    }
+})
+  .then((debates)=> {
     res.send(debates);
   })
   .catch((error) => {
