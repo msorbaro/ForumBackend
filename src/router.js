@@ -62,8 +62,11 @@ router.route('/userActiveDebates')
 
 router.route('/oneDebate/:id')
   .get(Debate.getOneDebate)
-  .put(Debate.goToNextDebateRound);
+  .put(Debate.goToNextDebateRound)
+  .post(Debate.addDebateVote);
 
 router.get('/sign-s3', signS3);
+
+
 
 export default router;

@@ -219,6 +219,29 @@ export const getCompletedDebatesForUser = (req, res) => {
     });
 };
 
+export const addDebateVote = (req, res) => {
+  Debate.findById(req.params.id)
+    .then((post) => {
+      console.log(post);
+      console.log(req.body.id);
+      console.log(req.body.section);
+      console.log(req.body.time);
+      post.videoLikes.push({
+        userID: req.body.id,
+        date: new Date(),
+        section: req.body.section,
+        time: req.body.time,
+      });
+      return post.save();
+    })
+    .then((post) => {
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
+
 
 // export const getRequestsByVotes = (req, res) => {
 //   RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
@@ -230,20 +253,7 @@ export const getCompletedDebatesForUser = (req, res) => {
 //     });
 // };
 //
-// export const addVote = (req, res) => {
-//   RequestModel.findById(req.params.id)
-//     .then((post) => {
-//       post.numRequests += 1;
-//       post.requestUsers.push({ email: req.body.email, date: new Date() });
-//       return post.save();
-//     })
-//     .then((post) => {
-//       res.send(post);
-//     })
-//     .catch((error) => {
-//       res.status(422).json({ error });
-//     });
-// };
+
 //
 // export const getRequestsForUser = (req, res) => {
 //   RequestModel.find({ $or: [{ person1Email: req.body.email }, { person2Email: req.body.email }] }).limit(5)
