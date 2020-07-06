@@ -257,15 +257,10 @@ export const checkIfUserLikesDebate = (req, res) => {
                cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
             }
          }
-      }
+      },
+      { $match : { _id : req.params.id} }
    }
-]).then((debates) => {
-     //console.log(post.videoLikes)
-      debates.findById(req.params.id).then((final)=>{
-        res.send(final)
-      })
-    })
-    .catch((error) => {
+]).catch((error) => {
       res.status(422).json({ error });
     });
 };
