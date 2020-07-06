@@ -248,7 +248,12 @@ export const checkIfUserLikesDebate = (req, res) => {
   console.log(req.body.email)
   console.log("^ above is email")
   console.log(req.params.id)
-  Debate.find({_id: req.params.id})
+  Debate.find({
+    _id: req.params.id,
+    "videoLikes": {
+      email: req.body.email,
+    }
+})
   .then((debates)=> {
     console.log(debates);
     res.send(debates);
