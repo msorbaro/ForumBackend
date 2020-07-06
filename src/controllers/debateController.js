@@ -247,6 +247,7 @@ export const addDebateVote = (req, res) => {
 export const checkIfUserLikesDebate = (req, res) => {
   console.log(req.body.email)
   console.log("^ above is email")
+  console.log(req.params.id)
   Debate.aggregate([
    //{
 
@@ -256,7 +257,7 @@ export const checkIfUserLikesDebate = (req, res) => {
    //       cond: { $eq: [ "$$videoLikes.email", req.body.email ] }
    //    }
    // },
-   { $match : { _id : req.params.id} }
+   { $match : { id : req.params.id} }
 ])
 .then((debates)=> {
   console.log(debates);
