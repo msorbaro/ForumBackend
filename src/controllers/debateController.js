@@ -265,15 +265,12 @@ export const checkIfUserLikesDebate = (req, res) => {
       });
 };
 
-export const getSectionLikes = (req, res) => {
-  // console.log(req.body.email)
-  // console.log("^ above is email")
-  // console.log(req.params.id)
+export const getSection1Likes = (req, res) => {
   Debate.find({
     _id: req.params.id,
     videoLikes: {
       $elemMatch: {
-        section: req.body.section,
+        section: 1,
       }
     }
 })
@@ -285,8 +282,56 @@ export const getSectionLikes = (req, res) => {
       });
 };
 
+export const getSection2Likes = (req, res) => {
+  Debate.find({
+    _id: req.params.id,
+    videoLikes: {
+      $elemMatch: {
+        section: 2,
+      }
+    }
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
 
+export const getSection3Likes = (req, res) => {
+  Debate.find({
+    _id: req.params.id,
+    videoLikes: {
+      $elemMatch: {
+        section: 3,
+      }
+    }
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
 
+export const getSection4Likes = (req, res) => {
+  Debate.find({
+    _id: req.params.id,
+    videoLikes: {
+      $elemMatch: {
+        section: 4,
+      }
+    }
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
 
 // export const getRequestsByVotes = (req, res) => {
 //   RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)

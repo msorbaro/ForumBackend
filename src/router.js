@@ -68,9 +68,17 @@ router.route('/oneDebate/:id')
 router.get('/sign-s3', signS3);
 
 router.route('/userDebateLikes/:id')
-  .put(Debate.checkIfUserLikesDebate)
+  .put(Debate.checkIfUserLikesDebate);
 
-router.route('/sectionDebateLikes/:id')
-    .put(Debate.getSectionLikes)
+router.route('/section1DebateLikes/:id')
+    .put(Debate.getSection1Likes);
 
+router.route('/section2DebateLikes/:id')
+    .put(Debate.getSection2Likes);
+
+router.route('/section3DebateLikes/:id')
+    .put(Debate.getSection3Likes);
+
+router.route('/section4DebateLikes/:id')
+    .put(Debate.getSection4Likes)
 export default router;
