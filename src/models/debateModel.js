@@ -15,7 +15,7 @@ const DebateSchema = new Schema({
   fourthVideoLink: { type: String, default: '' },
   videoViews: { type: Number, default: 0 },
   videoLikes: [{
-     userID: { type: Schema.Types.ObjectId, ref: 'User' },
+     email: String,
      date: Date,
      section: Number,
      time: Number,

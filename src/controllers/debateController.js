@@ -227,7 +227,7 @@ export const addDebateVote = (req, res) => {
       console.log(req.body.section);
       console.log(req.body.time);
       post.videoLikes.push({
-        userID: req.body.id,
+        email: req.body.email,
         date: new Date(),
         section: req.body.section,
         time: req.body.time,
