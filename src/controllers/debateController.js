@@ -261,7 +261,9 @@ export const checkIfUserLikesDebate = (req, res) => {
    }
 ]).then((debates) => {
      //console.log(post.videoLikes)
-      res.send(debates);
+      debates.findById(req.params.id).then((final)=>{
+        res.send(final)
+      })
     })
     .catch((error) => {
       res.status(422).json({ error });
