@@ -250,8 +250,10 @@ export const checkIfUserLikesDebate = (req, res) => {
   console.log(req.params.id)
   Debate.find({
     _id: req.params.id,
-    "videoLikes": {
-      email: req.body.email,
+    videoLikes: {
+      $elemMatch: {
+        email: req.body.email,
+      }
     }
 })
   .then((debates)=> {
