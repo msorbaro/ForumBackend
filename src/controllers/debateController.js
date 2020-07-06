@@ -245,7 +245,7 @@ export const addDebateVote = (req, res) => {
 };
 
 export const checkIfUserLikesDebate = (req, res) => {
-  Debate.findById(req.params.id).aggregate([
+  Debate.aggregate([
    {
       $project: {
          videoLikes: {
