@@ -12,6 +12,7 @@ const RequestSchema = new Schema({
   requestUsers: [{ email: String, date: Date }],
   person1ID: { type: Schema.Types.ObjectId, ref: 'User' },
   person2ID: { type: Schema.Types.ObjectId, ref: 'User' }, //  apikey: String, // primitive method for keeping multiple projects separate
+  status: { type: String, default: "ACCEPT_VOTES" },
 });
 
 RequestSchema.set('toJSON', {

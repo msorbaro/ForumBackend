@@ -81,7 +81,7 @@ export const createRequestNew = (req, res) => {
 
 
 export const getRequests = (req, res) => {
-  RequestModel.find({}, null, { sort: { numRequests: -1 } }).limit(5).populate('person1ID').populate('person2ID')
+  RequestModel.find({status: "ACCEPT_VOTES"}, null, { sort: { numRequests: -1 } }).limit(5).populate('person1ID').populate('person2ID')
     .then((posts) => {
       res.json(posts);
     })
@@ -91,7 +91,7 @@ export const getRequests = (req, res) => {
 };
 
 export const getRequestsByVotes = (req, res) => {
-  RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
+  RequestModel.find({status: "ACCEPT_VOTES"}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
     .then((posts) => {
       res.json(posts);
     })
