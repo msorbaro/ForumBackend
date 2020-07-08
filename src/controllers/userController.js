@@ -17,7 +17,8 @@ export const signin = (req, res, next) => {
   // User has already had their email and password auth'd
   // We just need to give them a token
   // console.log('in this method');
-  res.send({ token: tokenForUser(req.user), email: req.user.email });
+  console.log(req.user);
+  res.send({ token: tokenForUser(req.user), email: req.user.email, id: req.user._id });
 };
 
 
@@ -57,7 +58,8 @@ export const signup = (req, res, next) => {
     return user.save();
   })
     .then((user) => {
-      res.json({ token: tokenForUser(user), email });
+      console.log(user);
+      res.json({ token: tokenForUser(user), email, id: user._id });
     })
     .catch((error) => {
       return res.status(422).send({ error });
