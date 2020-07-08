@@ -18,7 +18,7 @@ export const createDebateLike = (req, res) => {
 };
 
 export const getSection4Likes = (req, res) => {
-  Debate.find({
+  DebateLike.find({
     debateID: req.params.id,
     videoSection: 4,
 })
@@ -31,7 +31,7 @@ export const getSection4Likes = (req, res) => {
 };
 
 export const getSection3Likes = (req, res) => {
-  Debate.find({
+  DebateLike.find({
     debateID: req.params.id,
     videoSection: 3,
 })
@@ -44,7 +44,7 @@ export const getSection3Likes = (req, res) => {
 };
 
 export const getSection2Likes = (req, res) => {
-  Debate.find({
+  DebateLike.find({
     debateID: req.params.id,
     videoSection: 2,
 })
@@ -57,7 +57,7 @@ export const getSection2Likes = (req, res) => {
 };
 
 export const getSection1Likes = (req, res) => {
-  Debate.find({
+  DebateLike.find({
     debateID: req.params.id,
     videoSection: 1,
 })
