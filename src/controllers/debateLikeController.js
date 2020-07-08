@@ -1,0 +1,70 @@
+import DebateLike from '../models/debateLikeModel';
+
+export const createDebateLike = (req, res) => {
+  const debateLike = new DebateLike();
+  debateLike.videoTime = req.body.videoTime;
+  debateLike.debateID = req.body.debateID;
+  debateLike.videoSection = req.body.videoSection;
+  debateLike.likerID = req.body.likerID;
+
+  debateLike.save()
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    //  console.log(error);
+    });
+};
+
+export const getSection4Likes = (req, res) => {
+  Debate.find({
+    debateID: req.params.id,
+    videoSection: 4,
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
+
+export const getSection3Likes = (req, res) => {
+  Debate.find({
+    debateID: req.params.id,
+    videoSection: 3,
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
+
+export const getSection2Likes = (req, res) => {
+  Debate.find({
+    debateID: req.params.id,
+    videoSection: 2,
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
+
+export const getSection1Likes = (req, res) => {
+  Debate.find({
+    debateID: req.params.id,
+    videoSection: 1,
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};

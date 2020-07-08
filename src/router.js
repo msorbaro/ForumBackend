@@ -2,6 +2,8 @@ import { Router } from 'express';
 import * as Request from './controllers/requestController';
 import * as UserController from './controllers/userController';
 import * as Debate from './controllers/debateController';
+import * as DebateLike from './controllers/debateLikeController';
+
 import { requireSignin } from './services/passport';
 import signS3 from './services/s3';
 
@@ -63,7 +65,7 @@ router.route('/userActiveDebates')
 router.route('/oneDebate/:id')
   .get(Debate.getOneDebate)
   .put(Debate.goToNextDebateRound)
-  .post(Debate.addDebateVote);
+  .post(DebateLike.createDebateLike);
 
 router.get('/sign-s3', signS3);
 
@@ -71,14 +73,14 @@ router.route('/userDebateLikes/:id')
   .put(Debate.checkIfUserLikesDebate);
 
 router.route('/section1DebateLikes/:id')
-    .put(Debate.getSection1Likes);
+    .put(DebateLike.getSection1Likes);
 
 router.route('/section2DebateLikes/:id')
-    .put(Debate.getSection2Likes);
+    .put(DebateLike.getSection2Likes);
 
 router.route('/section3DebateLikes/:id')
-    .put(Debate.getSection3Likes);
+    .put(DebateLike.getSection3Likes);
 
 router.route('/section4DebateLikes/:id')
-    .put(Debate.getSection4Likes)
+    .put(DebateLike.getSection4Likes)
 export default router;
