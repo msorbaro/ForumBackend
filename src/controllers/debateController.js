@@ -1,4 +1,5 @@
 import Debate from '../models/debateModel';
+import RequestModel from '../models/requestModel';
 
 
 export const createDebate = (req, res) => {
@@ -75,6 +76,13 @@ export const changePersonsDebateStatus = (req, res) => {
         post.personAcceptedFirst = req.body.email;
       }
       if (post.person1Status !== 'PENDING' && post.person2Status !== 'PENDING') {
+        RequestModel.findById(post.requestID).then((request)=>{
+          request.status = "NO_LIKES"
+          return request.save();
+        }).catch((error) => {
+            res.status(422).json({ error });
+          });
+
         if (post.person1Status === 'REJECTED' || post.person2Status === 'REJECTED') {
           post.overallStatus = 'REJECTED';
         } else {
