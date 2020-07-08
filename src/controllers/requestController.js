@@ -1,31 +1,31 @@
 import RequestModel from '../models/requestModel';
 import Debate from '../models/debateModel';
 
-
-export const createRequest = (req, res) => {
-  const post = new RequestModel();
-  post.numRequests = 1;
-  post.topic = req.body.topic;
-  post.person1 = req.body.person1;
-  post.person2 = req.body.person2;
-  post.date = new Date();
-  post.person1Email = req.body.person1Email;
-  post.person2Email = req.body.person2Email;
-  post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
-  post.save()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    //  console.log(error);
-    });
-};
+//
+// export const createRequest = (req, res) => {
+//   const post = new RequestModel();
+//   post.numRequests = 1;
+//   post.topic = req.body.topic;
+//   post.person1 = req.body.person1;
+//   post.person2 = req.body.person2;
+//   post.date = new Date();
+//   post.person1Email = req.body.person1Email;
+//   post.person2Email = req.body.person2Email;
+//   post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
+//   post.save()
+//     .then((result) => {
+//       res.json(result);
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ error });
+//     //  console.log(error);
+//     });
+// };
 
 export const createRequestNew = (req, res) => {
   RequestModel.find({
-    $or: [{ person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic },
-      { person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic }],
+    $or: [{ person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: "ACCEPT_VOTES" },
+      { person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: "ACCEPT_VOTES"  }],
   })
     .then((posts) => {
       if (posts.length === 1) {
