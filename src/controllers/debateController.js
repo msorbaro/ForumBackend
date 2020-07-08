@@ -172,15 +172,20 @@ export const goToNextDebateRound = (req, res) => {
       if (req.body.round === 1) {
         // console.log('went to round 1');
         post.firstVideoLink = req.body.link;
+        post.firstVideoLength = req.body.videoLength;
       } else if (req.body.round === 2) {
       //  console.log('went to round 2');
         post.secondVideoLink = req.body.link;
+        post.secondVideoLength = req.body.videoLength;
       } else if (req.body.round === 3) {
       //  console.log('went to round 3');
         post.thirdVideoLink = req.body.link;
+        post.thirdVideoLength = req.body.videoLength;
       } else if (req.body.round === 4) {
       //  console.log('went to round 4');
         post.fourthVideoLink = req.body.link;
+        post.fourthVideoLength = req.body.videoLength;
+
         post.overallStatus = 'COMPLETED';
       }
 
