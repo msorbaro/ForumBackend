@@ -70,7 +70,7 @@ router.route('/oneDebate/:id')
 router.get('/sign-s3', signS3);
 
 router.route('/userDebateLikes/:id')
-  .put(Debate.checkIfUserLikesDebate);
+  .put(DebateLike.getUserLikesForVideo);
 
 router.route('/section1DebateLikes/:id')
     .put(DebateLike.getSection1Likes);

@@ -68,3 +68,16 @@ export const getSection1Likes = (req, res) => {
         res.status(422).json({ error });
       });
 };
+
+export const getUserLikesForVideo = (req, res) => {
+  DebateLike.find({
+    debateID: req.params.id,
+    likerID: req.body.likerID,
+})
+  .then((debates)=> {
+    res.send(debates);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
