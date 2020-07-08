@@ -70,11 +70,15 @@ export const getSection1Likes = (req, res) => {
 };
 
 export const getUserLikesForVideo = (req, res) => {
+  console.log(req.params.id);
+  console.log(req.body.likerID)
   DebateLike.find({
     debateID: req.params.id,
     likerID: req.body.likerID,
 })
   .then((debates)=> {
+    console.log(debates);
+    console.log("in this get user likes for video")
     res.send(debates);
   })
   .catch((error) => {
