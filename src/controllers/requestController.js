@@ -1,5 +1,6 @@
 import RequestModel from '../models/requestModel';
 import Debate from '../models/debateModel';
+import Notification from '../models/notificationModel';
 
 //
 // export const createRequest = (req, res) => {
@@ -63,7 +64,25 @@ export const createRequestNew = (req, res) => {
             debate.person2Email = result.person2Email;
             return debate.save()
               .then((result2) => {
-                res.json(result2);
+                console.log(result)
+                console.log(result2)
+                const notification1 = new Notification();
+                notification1.debateID = result2._id;
+                notification1.type = "REQUESTED";
+                notification1.message = "You have been requested to debate " + result.person2;
+                notification1.userID = result.person1ID;
+                notification1.save().then((result3)=>{
+                  const notification2 = new Notification();
+                  notification2.debateID = result2._id;
+                  notification2.type = "REQUESTED";
+                  notification2.message = "You have been requested to debate " + result.person1;
+                  notification2.userID = result.person2ID;
+                  notification2.save().then((result3)=>{
+                    res.json(result2);
+                  });
+
+                })
+
               })
               .catch((error) => {
                 res.status(500).json({ error });

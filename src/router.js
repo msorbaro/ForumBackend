@@ -3,6 +3,7 @@ import * as Request from './controllers/requestController';
 import * as UserController from './controllers/userController';
 import * as Debate from './controllers/debateController';
 import * as DebateLike from './controllers/debateLikeController';
+import * as Notification from './controllers/notificationController';
 
 import { requireSignin } from './services/passport';
 import signS3 from './services/s3';
@@ -83,4 +84,18 @@ router.route('/section3DebateLikes/:id')
 
 router.route('/section4DebateLikes/:id')
     .put(DebateLike.getSection4Likes)
+
+router.route('/notifications')
+    .post(Notification.createNotification);
+
+router.route('/notifications/:id')    
+    .put(Notification.markNotificationAsRead);
+
+router.route('/getNewRequestsNotifications')
+    .put(Notification.getNewRequestNotificationsForUser);
+
+router.route('/getYourTurnNotifications')
+    .put(Notification.getYourTurnNotificationsForUser);
+
+
 export default router;

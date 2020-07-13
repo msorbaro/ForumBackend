@@ -1,7 +1,6 @@
 import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
 
-
 export const createDebate = (req, res) => {
   const debate = new Debate();
   debate.requestID = req.body.requestID;
