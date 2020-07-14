@@ -42,6 +42,8 @@ export const createRequestNew = (req, res) => {
           });
       } else {
         const post = new RequestModel();
+        console.log(req.body)
+        console.log("Thats the body above")
         post.numRequests = 1;
         post.topic = req.body.topic;
         post.person1 = req.body.person1;
@@ -62,6 +64,8 @@ export const createRequestNew = (req, res) => {
             debate.requestID = result._id;
             debate.person1Email = result.person1Email;
             debate.person2Email = result.person2Email;
+            debate.person1ID = result.person1ID;
+            debate.person2ID = result.person2ID;
             return debate.save()
               .then((result2) => {
                 console.log(result)

@@ -1,5 +1,6 @@
 import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
+import Notification from '../models/notificationModel';
 
 export const createDebate = (req, res) => {
   const debate = new Debate();
@@ -196,16 +197,63 @@ export const goToNextDebateRound = (req, res) => {
         post.overallStatus = 'COMPLETED';
       }
 
-      return post.save();
-    })
-    .then((post) => {
+      return post.save().then((post) => {
       // console.log('made it to the bottom here');
       // console.log(post);
-      res.send(post);
+      var acceptedFirstID =  post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
+      var acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
+      //
+      // console.log(post);
+      // console.log("the whole post")
+      // console.log(acceptedFirstID);
+      // console.log(acceptedSecondID);
+      //
+      // console.log(post.person1ID);
+      // console.log(post.person2ID);
+
+      // console.log(post.personAcceptedFirst)
+      // console.log(post.person2Email)
+      // console.log(post.person1Email)
+
+      if(post.personAcceptedFirst === post.person1Email){
+        acceptedFirstID = post.person1ID;
+        acceptedSecondID = post.person2ID;
+      }
+      else {
+        acceptedSecondID = post.person1ID;
+        acceptedFirstID = post.person2ID;
+      }
+
+      // console.log(acceptedFirstID);
+      // console.log(acceptedSecondID);
+
+      const notification = new Notification();
+      if(req.body.round === 1 || req.body.round === 3){
+        notification.debateID = post._id;
+        notification.type = "YOUR_TURN";
+        notification.message = "Its your turn to debate!";
+        notification.userID = acceptedSecondID;
+        return notification.save().then((result2) => {
+          res.send(post);
+        })
+      }
+      else if(req.body.round === 2) {
+        notification.debateID = post._id;
+        notification.type = "YOUR_TURN";
+        notification.message = "Its your turn to debate!";
+        notification.userID = acceptedFirstID;
+        return notification.save().then((result2) => {
+          res.send(post);
+        })
+      }
+      else {
+        res.send(post);
+      }
     })
     .catch((error) => {
       res.status(422).json({ error });
     });
+  })
 };
 
 export const getCompletedDebatesForUser = (req, res) => {

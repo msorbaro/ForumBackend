@@ -8,6 +8,8 @@ const DebateSchema = new Schema({
   person2Status: { type: String, default: 'PENDING' },
   person1Email: String,
   person2Email: String,
+  person1ID: { type: Schema.Types.ObjectId, ref: 'User' },
+  person2ID: { type: Schema.Types.ObjectId, ref: 'User' },
   personAcceptedFirst: { type: String, default: '' },
   firstVideoLink: { type: String, default: '' },
   secondVideoLink: { type: String, default: '' },
