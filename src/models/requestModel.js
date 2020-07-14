@@ -9,7 +9,7 @@ const RequestSchema = new Schema({
   person2Email: String,
   person1Email: String,
   date: { type: Date, default: Date.now },
-  requestUsers: [{ email: String, date: Date }],
+  requestUsers: [{ email: String, date: Date, userID: { type: Schema.Types.ObjectId, ref: 'User' } }],
   person1ID: { type: Schema.Types.ObjectId, ref: 'User' },
   person2ID: { type: Schema.Types.ObjectId, ref: 'User' }, //  apikey: String, // primitive method for keeping multiple projects separate
   status: { type: String, default: "ACCEPT_VOTES" },

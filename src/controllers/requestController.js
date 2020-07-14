@@ -51,7 +51,7 @@ export const createRequestNew = (req, res) => {
         post.date = new Date();
         post.person1Email = req.body.person1Email;
         post.person2Email = req.body.person2Email;
-        post.requestUsers = [{ email: req.body.requesterEmail, date: new Date() }]; // not for assignment
+        post.requestUsers = [{ email: req.body.requesterEmail, date: new Date(), userID: req.body.requesterID }]; // not for assignment
         post.person1ID = req.body.person1ID;
         post.person2ID = req.body.person2ID;
         //  console.log(post);
@@ -127,7 +127,7 @@ export const addVote = (req, res) => {
   RequestModel.findById(req.params.id)
     .then((post) => {
       post.numRequests += 1;
-      post.requestUsers.push({ email: req.body.email, date: new Date() });
+      post.requestUsers.push({ email: req.body.email, date: new Date(), userID: req.body.userID });
       return post.save();
     })
     .then((post) => {
