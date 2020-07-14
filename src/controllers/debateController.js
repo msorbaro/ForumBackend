@@ -92,6 +92,22 @@ export const changePersonsDebateStatus = (req, res) => {
       return post.save();
     })
     .then((post) => {
+      console.log(post)
+      if(post.overallStatus === 'PENDING_VIDEO'){
+        const notification = new Notification();
+        notification.debateID = post._id;
+        notification.type = "YOUR_TURN";
+        notification.message = "Its your turn to debate!";
+        if(post.person1Email === post.personAcceptedFirst){
+          notification.userID = post.person1ID;
+        }
+        else {
+          notification.userID = post.person2ID;
+        }
+        return notification.save().then((notification)=>{
+          res.send(post);
+        })
+      }
       res.send(post);
     })
     .catch((error) => {
