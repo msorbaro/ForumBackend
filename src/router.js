@@ -88,7 +88,7 @@ router.route('/section4DebateLikes/:id')
 router.route('/notifications')
     .post(Notification.createNotification);
 
-router.route('/notifications/:id')    
+router.route('/notifications/:id')
     .put(Notification.markNotificationAsRead);
 
 router.route('/getNewRequestsNotifications')
@@ -97,5 +97,10 @@ router.route('/getNewRequestsNotifications')
 router.route('/getYourTurnNotifications')
     .put(Notification.getYourTurnNotificationsForUser);
 
+router.route('/notificationDashboard/:id')
+    .get(Notification.getDashboardNotificationsForUser);
+
+router.route('/notificationDashboardUnseen/:id')
+  .get(Notification.getDashboardNotificationsForUserUnseen);
 
 export default router;

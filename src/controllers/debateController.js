@@ -67,10 +67,50 @@ export const changePersonsDebateStatus = (req, res) => {
     .then((post) => {
       // console.log(post);
       // console.log('MADE IT IN HERE');
+
+      var text = "";
+      if(req.body.status === "REJECTED"){
+        text = rejected;
+      }
+      else if(req.body.status=== "ACCEPTED"){
+        text = accepted;
+      }
+
       if (req.body.email === post.person1Email) {
         post.person1Status = req.body.status;
+
+        RequestModel.findById(post.requestID).then((request)=>{
+          console.log("found something")
+          for(var i =0; i<request.requestUsers.length; i++){
+            console.log(request.requestUsers[i]);
+            const notification = new Notification();
+            notification.debateID = post._id;
+            notification.userID = request.requestUsers[i].userID;
+            notification.type = "ACCEPTED_DEBATE";
+            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is has been " + text + " by " +request.person1+ "!";
+            notification.save();
+          }
+
+        }).catch((error) => {
+            res.status(422).json({ error });
+          });
       } else if (req.body.email === post.person2Email) {
         post.person2Status = req.body.status;
+        RequestModel.findById(post.requestID).then((request)=>{
+          console.log("found something")
+          for(var i =0; i<request.requestUsers.length; i++){
+            console.log(request.requestUsers[i]);
+            const notification = new Notification();
+            notification.debateID = post._id;
+            notification.userID = request.requestUsers[i].userID;
+            notification.type = "ACCEPTED_DEBATE";
+            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is has been " + text + " by " +request.person2+ "!";
+            notification.save();
+          }
+
+        }).catch((error) => {
+            res.status(422).json({ error });
+          });
       }
       if (post.personAcceptedFirst === '') {
         post.personAcceptedFirst = req.body.email;
@@ -263,6 +303,22 @@ export const goToNextDebateRound = (req, res) => {
         })
       }
       else {
+        console.log("In else")
+        console.log(post.requestID)
+        RequestModel.findById(post.requestID).then((request)=>{
+          console.log("found something")
+          for(var i =0; i<request.requestUsers.length; i++){
+            console.log(request.requestUsers[i]);
+            const notification = new Notification();
+            notification.debateID = post._id;
+            notification.userID = request.requestUsers[i].userID;
+            notification.type = "POSTED_DEBATE";
+            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is posted!";
+            notification.save();
+          }
+
+        })
+
         res.send(post);
       }
     })

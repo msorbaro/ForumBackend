@@ -60,3 +60,32 @@ export const getYourTurnNotificationsForUser = (req, res) => {
         res.status(422).json({ error });
       });
 };
+
+export const getDashboardNotificationsForUser = (req, res) => {
+  Notification.find({
+    userID: req.params.id,
+    $or : [{"type":"ACCEPTED_DEBATE"}, {"type":"POSTED_DEBATE"}]
+  }, {})
+  .then((notifications)=> {
+    console.log(notifications)
+    res.send(notifications);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
+
+export const getDashboardNotificationsForUserUnseen = (req, res) => {
+  Notification.find({
+    userID: req.params.id,
+    seenByUser: false, 
+    $or : [{"type":"ACCEPTED_DEBATE"}, {"type":"POSTED_DEBATE"}]
+  }, {})
+  .then((notifications)=> {
+    console.log(notifications)
+    res.send(notifications);
+  })
+  .catch((error) => {
+        res.status(422).json({ error });
+      });
+};
