@@ -35,6 +35,9 @@ router.route('/getPending')
 router.route('/getUser')
   .post(UserController.getUserByEmail);
 
+router.route('/addUserPhoto/:id')
+  .put(UserController.updatePhoto);
+
 router.route('/getApproved')
   .get(UserController.getApprovedUsers);
 

@@ -121,3 +121,25 @@ export const updateStatus = (req, res) => {
       res.status(422).json({ error });
     });
 };
+
+export const updatePhoto = (req, res) => {
+  // console.log(req.params.id);
+  // console.log('ABove is ID');
+  User.findById(req.params.id)
+    .then((post) => {
+      // console.log(post);
+      // console.log('this was found');
+      post.photo = req.body.photo;
+      // console.log(post.status);
+      // console.log('status after changing ^');
+      // console.log(req.body);
+      return post.save();
+    })
+    .then((post) => {
+    //  console.log('trying to send');
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
