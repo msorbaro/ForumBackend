@@ -65,17 +65,18 @@ export const changePersonsDebateStatus = (req, res) => {
   // console.log('here');
   Debate.findById(req.params.id)
     .then((post) => {
-      // console.log(post);
-      // console.log('MADE IT IN HERE');
+      console.log(post);
+      console.log('MADE IT IN HERE');
 
       var text = "";
       if(req.body.status === "REJECTED"){
-        text = rejected;
+        text = "rejected";
       }
       else if(req.body.status=== "ACCEPTED"){
-        text = accepted;
+        text = "accepted";
       }
 
+      console.log("this is text: " + text)
       if (req.body.email === post.person1Email) {
         post.person1Status = req.body.status;
 
@@ -107,6 +108,8 @@ export const changePersonsDebateStatus = (req, res) => {
             notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is has been " + text + " by " +request.person2+ "!";
             notification.save();
           }
+
+        console.log("Made it to this part")
 
         }).catch((error) => {
             res.status(422).json({ error });
