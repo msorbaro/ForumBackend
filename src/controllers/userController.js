@@ -26,7 +26,7 @@ export const signup = (req, res, next) => {
   const { email } = req.body;
   const { password } = req.body;
   const {
-    firstName, lastName, school, debateApp, photo
+    firstName, lastName, school, debateApp, photog
   } = req.body;
   let status = 'NOT_DEBATOR';
   let bio = '';
