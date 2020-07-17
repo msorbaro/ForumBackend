@@ -68,63 +68,60 @@ export const changePersonsDebateStatus = (req, res) => {
       console.log(post);
       console.log('MADE IT IN HERE');
 
-      var text = "";
-      if(req.body.status === "REJECTED"){
-        text = "rejected";
-      }
-      else if(req.body.status=== "ACCEPTED"){
-        text = "accepted";
+      let text = '';
+      if (req.body.status === 'REJECTED') {
+        text = 'rejected';
+      } else if (req.body.status === 'ACCEPTED') {
+        text = 'accepted';
       }
 
-      console.log("this is text: " + text)
+      console.log(`this is text: ${text}`);
       if (req.body.email === post.person1Email) {
         post.person1Status = req.body.status;
 
-        RequestModel.findById(post.requestID).then((request)=>{
-          console.log("found something")
-          for(var i =0; i<request.requestUsers.length; i++){
+        RequestModel.findById(post.requestID).then((request) => {
+          console.log('found something');
+          for (let i = 0; i < request.requestUsers.length; i += 1) {
             console.log(request.requestUsers[i]);
             const notification = new Notification();
             notification.debateID = post._id;
             notification.userID = request.requestUsers[i].userID;
-            notification.type = "ACCEPTED_DEBATE";
-            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is has been " + text + " by " +request.person1+ "!";
+            notification.type = 'ACCEPTED_DEBATE';
+            notification.message = `The debate you requested between ${request.person1} and ${request.person2} is has been ${text} by ${request.person1}!`;
             notification.save();
           }
-
         }).catch((error) => {
-            res.status(422).json({ error });
-          });
+          res.status(422).json({ error });
+        });
       } else if (req.body.email === post.person2Email) {
         post.person2Status = req.body.status;
-        RequestModel.findById(post.requestID).then((request)=>{
-          console.log("found something")
-          for(var i =0; i<request.requestUsers.length; i++){
+        RequestModel.findById(post.requestID).then((request) => {
+          console.log('found something');
+          for (let i = 0; i < request.requestUsers.length; i += 1) {
             console.log(request.requestUsers[i]);
             const notification = new Notification();
             notification.debateID = post._id;
             notification.userID = request.requestUsers[i].userID;
-            notification.type = "ACCEPTED_DEBATE";
-            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is has been " + text + " by " +request.person2+ "!";
+            notification.type = 'ACCEPTED_DEBATE';
+            notification.message = `The debate you requested between ${request.person1} and ${request.person2} is has been ${text} by ${request.person2}!`;
             notification.save();
           }
 
-        console.log("Made it to this part")
-
+          console.log('Made it to this part');
         }).catch((error) => {
-            res.status(422).json({ error });
-          });
+          res.status(422).json({ error });
+        });
       }
       if (post.personAcceptedFirst === '') {
         post.personAcceptedFirst = req.body.email;
       }
       if (post.person1Status !== 'PENDING' && post.person2Status !== 'PENDING') {
-        RequestModel.findById(post.requestID).then((request)=>{
-          request.status = "NO_LIKES"
+        RequestModel.findById(post.requestID).then((request) => {
+          request.status = 'NO_LIKES';
           return request.save();
         }).catch((error) => {
-            res.status(422).json({ error });
-          });
+          res.status(422).json({ error });
+        });
 
         if (post.person1Status === 'REJECTED' || post.person2Status === 'REJECTED') {
           post.overallStatus = 'REJECTED';
@@ -135,21 +132,20 @@ export const changePersonsDebateStatus = (req, res) => {
       return post.save();
     })
     .then((post) => {
-      console.log(post)
-      if(post.overallStatus === 'PENDING_VIDEO'){
+      console.log(post);
+      if (post.overallStatus === 'PENDING_VIDEO') {
         const notification = new Notification();
         notification.debateID = post._id;
-        notification.type = "YOUR_TURN";
-        notification.message = "Its your turn to debate!";
-        if(post.person1Email === post.personAcceptedFirst){
+        notification.type = 'YOUR_TURN';
+        notification.message = 'Its your turn to debate!';
+        if (post.person1Email === post.personAcceptedFirst) {
           notification.userID = post.person1ID;
-        }
-        else {
+        } else {
           notification.userID = post.person2ID;
         }
-        return notification.save().then((notification)=>{
+        return notification.save().then((notification) => {
           res.send(post);
-        })
+        });
       }
       res.send(post);
     })
@@ -259,76 +255,72 @@ export const goToNextDebateRound = (req, res) => {
       return post.save().then((post) => {
       // console.log('made it to the bottom here');
       // console.log(post);
-      var acceptedFirstID =  post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
-      var acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
-      //
-      // console.log(post);
-      // console.log("the whole post")
-      // console.log(acceptedFirstID);
-      // console.log(acceptedSecondID);
-      //
-      // console.log(post.person1ID);
-      // console.log(post.person2ID);
+        let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
+        let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
+        //
+        // console.log(post);
+        // console.log("the whole post")
+        // console.log(acceptedFirstID);
+        // console.log(acceptedSecondID);
+        //
+        // console.log(post.person1ID);
+        // console.log(post.person2ID);
 
-      // console.log(post.personAcceptedFirst)
-      // console.log(post.person2Email)
-      // console.log(post.person1Email)
+        // console.log(post.personAcceptedFirst)
+        // console.log(post.person2Email)
+        // console.log(post.person1Email)
 
-      if(post.personAcceptedFirst === post.person1Email){
-        acceptedFirstID = post.person1ID;
-        acceptedSecondID = post.person2ID;
-      }
-      else {
-        acceptedSecondID = post.person1ID;
-        acceptedFirstID = post.person2ID;
-      }
+        if (post.personAcceptedFirst === post.person1Email) {
+          acceptedFirstID = post.person1ID;
+          acceptedSecondID = post.person2ID;
+        } else {
+          acceptedSecondID = post.person1ID;
+          acceptedFirstID = post.person2ID;
+        }
 
-      // console.log(acceptedFirstID);
-      // console.log(acceptedSecondID);
+        // console.log(acceptedFirstID);
+        // console.log(acceptedSecondID);
 
-      const notification = new Notification();
-      if(req.body.round === 1 || req.body.round === 3){
-        notification.debateID = post._id;
-        notification.type = "YOUR_TURN";
-        notification.message = "Its your turn to debate!";
-        notification.userID = acceptedSecondID;
-        return notification.save().then((result2) => {
+        const notification = new Notification();
+        if (req.body.round === 1 || req.body.round === 3) {
+          notification.debateID = post._id;
+          notification.type = 'YOUR_TURN';
+          notification.message = 'Its your turn to debate!';
+          notification.userID = acceptedSecondID;
+          return notification.save().then((result2) => {
+            res.send(post);
+          });
+        } else if (req.body.round === 2) {
+          notification.debateID = post._id;
+          notification.type = 'YOUR_TURN';
+          notification.message = 'Its your turn to debate!';
+          notification.userID = acceptedFirstID;
+          return notification.save().then((result2) => {
+            res.send(post);
+          });
+        } else {
+          console.log('In else');
+          console.log(post.requestID);
+          RequestModel.findById(post.requestID).then((request) => {
+            console.log('found something');
+            for (let i = 0; i < request.requestUsers.length; i++) {
+              console.log(request.requestUsers[i]);
+              const notification = new Notification();
+              notification.debateID = post._id;
+              notification.userID = request.requestUsers[i].userID;
+              notification.type = 'POSTED_DEBATE';
+              notification.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
+              notification.save();
+            }
+          });
+
           res.send(post);
-        })
-      }
-      else if(req.body.round === 2) {
-        notification.debateID = post._id;
-        notification.type = "YOUR_TURN";
-        notification.message = "Its your turn to debate!";
-        notification.userID = acceptedFirstID;
-        return notification.save().then((result2) => {
-          res.send(post);
-        })
-      }
-      else {
-        console.log("In else")
-        console.log(post.requestID)
-        RequestModel.findById(post.requestID).then((request)=>{
-          console.log("found something")
-          for(var i =0; i<request.requestUsers.length; i++){
-            console.log(request.requestUsers[i]);
-            const notification = new Notification();
-            notification.debateID = post._id;
-            notification.userID = request.requestUsers[i].userID;
-            notification.type = "POSTED_DEBATE";
-            notification.message = "The debate you requested between " + request.person1 + " and " + request.person2 + " is posted!";
-            notification.save();
-          }
-
-        })
-
-        res.send(post);
-      }
-    })
-    .catch((error) => {
-      res.status(422).json({ error });
+        }
+      })
+        .catch((error) => {
+          res.status(422).json({ error });
+        });
     });
-  })
 };
 
 export const getCompletedDebatesForUser = (req, res) => {
@@ -399,6 +391,24 @@ export const addDebateVote = (req, res) => {
 //         res.status(422).json({ error });
 //       });
 // };
+//
+// export const getAllVideoLikes = (req, res) => {
+//   Debate.find({
+//     _id: req.params.id,
+//     videoLikes: {
+//       $elemMatch: {
+//         section: 1,
+//       },
+//     },
+//   })
+//     .then((debates) => {
+//       res.send(debates);
+//     })
+//     .catch((error) => {
+//       res.status(422).json({ error });
+//     });
+// };
+
 
 export const getSection1Likes = (req, res) => {
   Debate.find({
@@ -406,15 +416,15 @@ export const getSection1Likes = (req, res) => {
     videoLikes: {
       $elemMatch: {
         section: 1,
-      }
-    }
-})
-  .then((debates)=> {
-    res.send(debates);
+      },
+    },
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((debates) => {
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getSection2Likes = (req, res) => {
@@ -423,15 +433,15 @@ export const getSection2Likes = (req, res) => {
     videoLikes: {
       $elemMatch: {
         section: 2,
-      }
-    }
-})
-  .then((debates)=> {
-    res.send(debates);
+      },
+    },
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((debates) => {
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getSection3Likes = (req, res) => {
@@ -440,15 +450,15 @@ export const getSection3Likes = (req, res) => {
     videoLikes: {
       $elemMatch: {
         section: 3,
-      }
-    }
-})
-  .then((debates)=> {
-    res.send(debates);
+      },
+    },
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((debates) => {
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getSection4Likes = (req, res) => {
@@ -457,15 +467,15 @@ export const getSection4Likes = (req, res) => {
     videoLikes: {
       $elemMatch: {
         section: 4,
-      }
-    }
-})
-  .then((debates)=> {
-    res.send(debates);
+      },
+    },
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((debates) => {
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 // export const getRequestsByVotes = (req, res) => {

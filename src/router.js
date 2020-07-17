@@ -77,31 +77,34 @@ router.route('/userDebateLikes/:id')
   .put(DebateLike.getUserLikesForVideo);
 
 router.route('/section1DebateLikes/:id')
-    .put(DebateLike.getSection1Likes);
+  .put(DebateLike.getSection1Likes);
 
 router.route('/section2DebateLikes/:id')
-    .put(DebateLike.getSection2Likes);
+  .put(DebateLike.getSection2Likes);
 
 router.route('/section3DebateLikes/:id')
-    .put(DebateLike.getSection3Likes);
+  .put(DebateLike.getSection3Likes);
 
 router.route('/section4DebateLikes/:id')
-    .put(DebateLike.getSection4Likes)
+  .put(DebateLike.getSection4Likes);
+
+router.route('/allDebateLikes/:id')
+  .put(DebateLike.getAllDebateLikes);
 
 router.route('/notifications')
-    .post(Notification.createNotification);
+  .post(Notification.createNotification);
 
 router.route('/notifications/:id')
-    .put(Notification.markNotificationAsRead);
+  .put(Notification.markNotificationAsRead);
 
 router.route('/getNewRequestsNotifications')
-    .put(Notification.getNewRequestNotificationsForUser);
+  .put(Notification.getNewRequestNotificationsForUser);
 
 router.route('/getYourTurnNotifications')
-    .put(Notification.getYourTurnNotificationsForUser);
+  .put(Notification.getYourTurnNotificationsForUser);
 
 router.route('/notificationDashboard/:id')
-    .get(Notification.getDashboardNotificationsForUser);
+  .get(Notification.getDashboardNotificationsForUser);
 
 router.route('/notificationDashboardUnseen/:id')
   .get(Notification.getDashboardNotificationsForUserUnseen);
