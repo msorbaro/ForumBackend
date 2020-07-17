@@ -88,8 +88,8 @@ router.route('/section3DebateLikes/:id')
 router.route('/section4DebateLikes/:id')
   .put(DebateLike.getSection4Likes);
 
-// router.route('/allDebateLikes/:id')
-//   .put(DebateLike.getAllDebateLikes);
+router.route('/addDebateView/:id')
+  .put(Debate.addView);
 
 router.route('/notifications')
   .post(Notification.createNotification);
