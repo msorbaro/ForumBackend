@@ -11,7 +11,7 @@ const UserSchema = new Schema({
   status: String,
   school: String,
   bio: String,
-  photo: { type: String, default: "" },
+  photo: { type: String, default: '' },
 });
 
 UserSchema.set('toJSON', {

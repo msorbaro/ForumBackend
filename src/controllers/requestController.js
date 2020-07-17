@@ -25,8 +25,12 @@ import Notification from '../models/notificationModel';
 
 export const createRequestNew = (req, res) => {
   RequestModel.find({
-    $or: [{ person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: "ACCEPT_VOTES" },
-      { person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: "ACCEPT_VOTES"  }],
+    $or: [{
+      person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: 'ACCEPT_VOTES',
+    },
+    {
+      person1Email: req.body.person1Email, person2Email: req.body.person2Email, topic: req.body.topic, status: 'ACCEPT_VOTES',
+    }],
   })
     .then((posts) => {
       if (posts.length === 1) {
@@ -42,8 +46,8 @@ export const createRequestNew = (req, res) => {
           });
       } else {
         const post = new RequestModel();
-        console.log(req.body)
-        console.log("Thats the body above")
+        console.log(req.body);
+        console.log('Thats the body above');
         post.numRequests = 1;
         post.topic = req.body.topic;
         post.person1 = req.body.person1;
@@ -68,25 +72,23 @@ export const createRequestNew = (req, res) => {
             debate.person2ID = result.person2ID;
             return debate.save()
               .then((result2) => {
-                console.log(result)
-                console.log(result2)
+                console.log(result);
+                console.log(result2);
                 const notification1 = new Notification();
                 notification1.debateID = result2._id;
-                notification1.type = "REQUESTED";
-                notification1.message = "You have been requested to debate " + result.person2;
+                notification1.type = 'REQUESTED';
+                notification1.message = `You have been requested to debate ${result.person2}`;
                 notification1.userID = result.person1ID;
-                notification1.save().then((result3)=>{
+                notification1.save().then((result3) => {
                   const notification2 = new Notification();
                   notification2.debateID = result2._id;
-                  notification2.type = "REQUESTED";
-                  notification2.message = "You have been requested to debate " + result.person1;
+                  notification2.type = 'REQUESTED';
+                  notification2.message = `You have been requested to debate ${result.person1}`;
                   notification2.userID = result.person2ID;
-                  notification2.save().then((result3)=>{
+                  notification2.save().then((result4) => {
                     res.json(result2);
                   });
-
-                })
-
+                });
               })
               .catch((error) => {
                 res.status(500).json({ error });
@@ -104,7 +106,7 @@ export const createRequestNew = (req, res) => {
 
 
 export const getRequests = (req, res) => {
-  RequestModel.find({status: "ACCEPT_VOTES"}, null, { sort: { numRequests: -1 } }).limit(5).populate('person1ID').populate('person2ID')
+  RequestModel.find({ status: 'ACCEPT_VOTES' }, null, { sort: { numRequests: -1 } }).limit(5).populate('person1ID').populate('person2ID')
     .then((posts) => {
       res.json(posts);
     })
@@ -114,7 +116,7 @@ export const getRequests = (req, res) => {
 };
 
 export const getRequestsByVotes = (req, res) => {
-  RequestModel.find({status: "ACCEPT_VOTES"}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
+  RequestModel.find({ status: 'ACCEPT_VOTES' }, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
     .then((posts) => {
       res.json(posts);
     })

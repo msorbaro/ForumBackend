@@ -20,12 +20,13 @@ const DebateSchema = new Schema({
   thirdVideoLength: { type: Number, default: 0 },
   fourthVideoLength: { type: Number, default: 0 },
   videoViews: { type: Number, default: 0 },
+  totalVideoLikes: { type: Number, default: 0 },
   videoLikes: [{
-     email: String,
-     date: Date,
-     section: Number,
-     time: Number,
-   }],
+    email: String,
+    date: Date,
+    section: Number,
+    time: Number,
+  }],
 });
 
 DebateSchema.set('toJSON', {

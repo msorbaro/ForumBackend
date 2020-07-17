@@ -1,4 +1,6 @@
 import DebateLike from '../models/debateLikeModel';
+import Debate from '../models/debateModel';
+
 
 export const createDebateLike = (req, res) => {
   const debateLike = new DebateLike();
@@ -9,6 +11,11 @@ export const createDebateLike = (req, res) => {
 
   debateLike.save()
     .then((result) => {
+      Debate.findById(req.body.debateID)
+        .then((post) => {
+          post.totalVideoLikes += 1;
+          return post.save();
+        });
       res.json(result);
     })
     .catch((error) => {
