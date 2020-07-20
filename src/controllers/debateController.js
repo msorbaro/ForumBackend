@@ -230,6 +230,7 @@ export const testingAPI = (req, res) => {
   console.log('testing this, i was hit');
   const info = req.body.results;
   console.log(info);
+  console.log(req.body);
   console.log(req.body.results.video_webm[0].ssl_url);
 
   res.send('200');
