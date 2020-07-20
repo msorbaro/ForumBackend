@@ -231,6 +231,8 @@ export const testingAPI = (req, res) => {
   console.log(req.body);
   console.log('^ whole body');
   console.log(req.body.transloadit);
+  console.log(req.body.transloadit.results);
+  console.log(req.body.transloadit.results.video_webm[0].url);
 };
 
 export const goToNextDebateRound = (req, res) => {
