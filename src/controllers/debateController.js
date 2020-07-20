@@ -228,9 +228,12 @@ export const getOneDebate = (req, res) => {
 
 export const testingAPI = (req, res) => {
   console.log('testing this, i was hit');
-  console.log(req.body.transloadit);
-  console.log(req.body.transloadit[0].message);
-  console.log(req.body.transloadit[0].results);
+  // console.log(req.body.transloadit);
+  const info = req.body.transloadit;
+  console.log(info);
+  console.log(info.message);
+  // console.log(req.body.transloadit[0].message);
+  // console.log(req.body.transloadit[0].results);
 };
 
 export const goToNextDebateRound = (req, res) => {
