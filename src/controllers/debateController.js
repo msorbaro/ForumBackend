@@ -226,6 +226,11 @@ export const getOneDebate = (req, res) => {
     });
 };
 
+export const testingAPI = (req, res) => {
+  console.log('testing this, i was hit');
+  console.log(req);
+};
+
 export const goToNextDebateRound = (req, res) => {
   console.log(req.params.id);
   console.log('here');
