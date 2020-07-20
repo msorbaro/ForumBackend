@@ -232,7 +232,7 @@ export const testingAPI = (req, res) => {
   console.log('^ whole body');
   console.log(req.body.transloadit);
   console.log(req.body.transloadit.results);
-  console.log(req.body.transloadit.results.video_webm[0].url);
+  console.log(req.body.results);
 };
 
 export const goToNextDebateRound = (req, res) => {
