@@ -230,8 +230,7 @@ export const testingAPI = (req, res) => {
   console.log('testing this, i was hit');
   console.log(req.body);
   console.log('^ whole body');
-  console.log(req.body.transloadit.assembly);
-  console.log(req.body.transloadit.results);
+  console.log(req.body.transloadit);
 };
 
 export const goToNextDebateRound = (req, res) => {
