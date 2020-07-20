@@ -229,8 +229,9 @@ export const getOneDebate = (req, res) => {
 export const goToNextRoundWithAPI = (req, res) => {
   const jsonresult = JSON.parse(req.body.transloadit);
   const debateID = req.params.id;
-  const videoLink = jsonresult.results.video_webm !== undefined ? jsonresult.results.video_webm[0].ssl_url : undefined;
-  const videoLength = jsonresult.results.video_webm !== undefined ? jsonresult.results.video_webm[0].meta.duration : undefined;
+  console.log(jsonresult);
+  const videoLink = jsonresult.results.video_webm[0].ssl_url;
+  const videoLength = jsonresult.results.video_webm[0].meta.duration;
   console.log(videoLink);
   console.log(videoLength);
   let round = 0;
