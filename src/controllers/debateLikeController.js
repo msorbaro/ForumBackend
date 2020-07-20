@@ -23,18 +23,18 @@ export const createDebateLike = (req, res) => {
     //  console.log(error);
     });
 };
-
-export const getAllDebateLikes = (req, res) => {
-  DebateLike.find({
-    debateID: req.params.id,
-  })
-    .then((debates) => {
-      res.send(debates);
-    })
-    .catch((error) => {
-      res.status(422).json({ error });
-    });
-};
+// 
+// export const getAllDebateLikes = (req, res) => {
+//   DebateLike.find({
+//     debateID: req.params.id,
+//   })
+//     .then((debates) => {
+//       res.send(debates);
+//     })
+//     .catch((error) => {
+//       res.status(422).json({ error });
+//     });
+// };
 
 export const getSection4Likes = (req, res) => {
   DebateLike.find({

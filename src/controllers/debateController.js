@@ -483,24 +483,17 @@ export const getSection4Likes = (req, res) => {
     });
 };
 
-// export const getRequestsByVotes = (req, res) => {
-//   RequestModel.find({}, null, { sort: { numRequests: -1, created_at: -1 } }).limit(4)
-//     .then((posts) => {
-//       res.json(posts);
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
-// };
-//
 
-//
-// export const getRequestsForUser = (req, res) => {
-//   RequestModel.find({ $or: [{ person1Email: req.body.email }, { person2Email: req.body.email }] }).limit(5)
-//     .then((posts) => {
-//       res.json(posts);
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
-// };
+export const addView = (req, res) => {
+  Debate.findById(req.params.id)
+    .then((post) => {
+      post.videoViews += 1;
+      return post.save();
+    })
+    .then((post) => {
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
