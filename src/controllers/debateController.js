@@ -300,12 +300,12 @@ export const goToNextRoundWithAPI = (req, res) => {
               console.log(request.requestUsers.length);
               for (let i = 0; i < request.requestUsers.length; i += 1) {
                 console.log(request.requestUsers[i]);
-                // const notification2 = new Notification();
-                // notification2.debateID = post._id;
-                // notification2.userID = request.requestUsers[i].userID;
-                // notification2.type = 'POSTED_DEBATE';
-                // notification2.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
-                // notification2.save();
+                const notification2 = new Notification();
+                notification2.debateID = post._id;
+                notification2.userID = request.requestUsers[i].userID;
+                notification2.type = 'POSTED_DEBATE';
+                notification2.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
+                notification2.save();
               }
             });
           }
