@@ -227,11 +227,12 @@ export const getOneDebate = (req, res) => {
 };
 
 export const testingAPI = (req, res) => {
+  const jsonresult = JSON.parse(req.body.transloadit);
   console.log('testing this, i was hit');
-  const info = req.body.results;
-  console.log(info);
-  console.log(req.body);
-  console.log(req.body.results.video_webm[0].ssl_url);
+  //  const info = req.body.results;
+  //  console.log(info);
+  console.log(jsonresult);
+  console.log(jsonresult.results.video_webm[0].ssl_url);
 
   res.send('200');
 };
