@@ -72,7 +72,7 @@ router.route('/oneDebate/:id')
   .post(DebateLike.createDebateLike);
 
 router.route('/testingAPI/:id')
-  .post(Debate.testingAPI);
+  .post(Debate.goToNextRoundWithAPI);
 
 router.get('/sign-s3', signS3);
 

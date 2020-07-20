@@ -226,13 +226,95 @@ export const getOneDebate = (req, res) => {
     });
 };
 
-export const testingAPI = (req, res) => {
+export const goToNextRoundWithAPI = (req, res) => {
   const jsonresult = JSON.parse(req.body.transloadit);
-  console.log('testing this, i was hit');
-  //  const info = req.body.results;
-  //  console.log(info);
-  console.log(jsonresult);
-  console.log(jsonresult.results.video_webm[0].ssl_url);
+  const debateID = req.params.id;
+  const videoLink = jsonresult.results.video_webm[0].ssl_url;
+  const videoLength = jsonresult.video_webm[0].meta.duration;
+  console.log(videoLink);
+  console.log(videoLength);
+  let round = 0;
+
+  Debate.findById(debateID)
+    .then((debate) => {
+      if (debate.thirdVideoLink !== '') {
+        // console.log('went to round 4');
+        debate.fourthVideoLink = videoLink;
+        debate.fourthVideoLength = videoLength;
+        round = 4;
+
+        debate.overallStatus = 'COMPLETED';
+      } else if (debate.secondVideoLink !== '') {
+      //  console.log('went to round 3');
+        debate.thirdVideoLink = videoLink;
+        debate.thirdVideoLength = videoLength;
+        round = 3;
+      } else if (debate.firstVideoLink !== '') {
+      //  console.log('went to round 2');
+        debate.secondVideoLink = videoLink;
+        debate.secondVideoLength = videoLength;
+        round = 2;
+      } else if (debate.firstVideoLink === '') {
+      //  console.log('went to round 1');
+        debate.firstVideoLink = videoLink;
+        debate.firstVideoLength = videoLength;
+        round = 1;
+      }
+
+      return debate.save().then((post) => {
+        let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
+        let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
+
+        if (post.personAcceptedFirst === post.person1Email) {
+          acceptedFirstID = post.person1ID;
+          acceptedSecondID = post.person2ID;
+        } else {
+          acceptedSecondID = post.person1ID;
+          acceptedFirstID = post.person2ID;
+        }
+
+        // console.log(acceptedFirstID);
+        // console.log(acceptedSecondID);
+
+        console.log(round);
+        const notification = new Notification();
+        if (round === 1 || round === 3) {
+          notification.debateID = post._id;
+          notification.type = 'YOUR_TURN';
+          notification.message = 'Its your turn to debate!';
+          notification.userID = acceptedSecondID;
+          return notification.save().then((result2) => {
+            res.send(post);
+          });
+        } else if (round === 2) {
+          notification.debateID = post._id;
+          notification.type = 'YOUR_TURN';
+          notification.message = 'Its your turn to debate!';
+          notification.userID = acceptedFirstID;
+          return notification.save().then((result2) => {
+            res.send(post);
+          });
+        } else {
+          RequestModel.findById(post.requestID).then((request) => {
+            console.log('found something');
+            for (let i = 0; i < request.requestUsers.length; i += 1) {
+              console.log(request.requestUsers[i]);
+              const notification2 = new Notification();
+              notification2.debateID = post._id;
+              notification2.userID = request.requestUsers[i].userID;
+              notification2.type = 'POSTED_DEBATE';
+              notification2.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
+              notification2.save();
+            }
+          });
+
+          res.send(post);
+        }
+      })
+        .catch((error) => {
+          res.status(422).json({ error });
+        });
+    });
 
   res.send('200');
 };
