@@ -229,6 +229,8 @@ export const getOneDebate = (req, res) => {
 export const testingAPI = (req, res) => {
   console.log('testing this, i was hit');
   // console.log(req.body.transloadit);
+  res.send('200');
+
   const info = req.body.transloadit;
   console.log(info);
   console.log(info.message);
