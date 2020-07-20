@@ -228,7 +228,10 @@ export const getOneDebate = (req, res) => {
 
 export const testingAPI = (req, res) => {
   console.log('testing this, i was hit');
-  console.log(req);
+  console.log(req.body);
+  console.log('^ whole body');
+  console.log(req.body.transloadit.assembly);
+  console.log(req.body.transloadit.results);
 };
 
 export const goToNextDebateRound = (req, res) => {
@@ -258,22 +261,8 @@ export const goToNextDebateRound = (req, res) => {
       }
 
       return post.save().then((post) => {
-      // console.log('made it to the bottom here');
-      // console.log(post);
         let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
         let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
-        //
-        // console.log(post);
-        // console.log("the whole post")
-        // console.log(acceptedFirstID);
-        // console.log(acceptedSecondID);
-        //
-        // console.log(post.person1ID);
-        // console.log(post.person2ID);
-
-        // console.log(post.personAcceptedFirst)
-        // console.log(post.person2Email)
-        // console.log(post.person1Email)
 
         if (post.personAcceptedFirst === post.person1Email) {
           acceptedFirstID = post.person1ID;
