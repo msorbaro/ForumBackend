@@ -230,7 +230,7 @@ export const goToNextRoundWithAPI = (req, res) => {
   const jsonresult = JSON.parse(req.body.transloadit);
   const debateID = req.params.id;
   const videoLink = jsonresult.results.video_webm[0].ssl_url;
-  const videoLength = jsonresult.video_webm[0].meta.duration;
+  const videoLength = jsonresult.results.video_webm[0].meta.duration;
   console.log(videoLink);
   console.log(videoLength);
   let round = 0;
