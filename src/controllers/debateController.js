@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
 import Notification from '../models/notificationModel';
@@ -226,14 +227,20 @@ export const getOneDebate = (req, res) => {
     });
 };
 
+export const concatVideoFinished = (req, res) => {
+  console.log('Made this here');
+  const jsonresult = JSON.parse(req.body.transloadit);
+  console.log(jsonresult);
+};
+
 export const goToNextRoundWithAPI = (req, res) => {
   const jsonresult = JSON.parse(req.body.transloadit);
   const debateID = req.params.id;
-  console.log(jsonresult);
+  // console.log(jsonresult);
   const videoLink = jsonresult.results.video_webm[0].ssl_url;
   const videoLength = jsonresult.results.video_webm[0].meta.duration;
-  console.log(videoLink);
-  console.log(videoLength);
+  // console.log(videoLink);
+  // console.log(videoLength);
   let round = 0;
 
   Debate.findById(debateID)
@@ -243,6 +250,21 @@ export const goToNextRoundWithAPI = (req, res) => {
         debate.fourthVideoLink = videoLink;
         debate.fourthVideoLength = videoLength;
         round = 4;
+
+        const data = {
+          params: {
+            auth: {
+              key: 'b4f061fc5b5948b2ad5739a92a6f092f',
+            },
+            template_id: '0d209cf1e80c473abc65e12caff9c561',
+            fields: {
+              folder_name: debate._id,
+            },
+            notify_url: `https://forum-debate.herokuapp.com/api/concatVideo/${debate._id}`,
+          },
+        };
+
+        axios.post('https://api2.transloadit.com/assemblies', data);
 
         debate.overallStatus = 'COMPLETED';
       } else if (debate.secondVideoLink !== '') {
@@ -280,7 +302,7 @@ export const goToNextRoundWithAPI = (req, res) => {
           // console.log(acceptedFirstID);
           // console.log(acceptedSecondID);
 
-          console.log(round);
+          // console.log(round);
           const notification = new Notification();
           if (round === 1 || round === 3) {
             notification.debateID = post._id;
@@ -296,10 +318,10 @@ export const goToNextRoundWithAPI = (req, res) => {
             return notification.save();
           } else {
             RequestModel.findById(post.requestID).then((request) => {
-              console.log('found something');
-              console.log(request.requestUsers.length);
+              // console.log('found something');
+              // console.log(request.requestUsers.length);
               for (let i = 0; i < request.requestUsers.length; i += 1) {
-                console.log(request.requestUsers[i]);
+              //  console.log(request.requestUsers[i]);
                 const notification2 = new Notification();
                 notification2.debateID = post._id;
                 notification2.userID = request.requestUsers[i].userID;

@@ -74,6 +74,9 @@ router.route('/oneDebate/:id')
 router.route('/testingAPI/:id')
   .post(Debate.goToNextRoundWithAPI);
 
+router.route('/concatVideo/:id')
+  .post(Debate.concatVideoFinished);
+
 router.get('/sign-s3', signS3);
 
 router.route('/userDebateLikes/:id')
