@@ -261,9 +261,9 @@ export const goToNextRoundWithAPI = (req, res) => {
         round = 1;
       }
 
-      console.log(round)
+      console.log(round);
 
-      return debate.save()
+      return debate.save();
       // .then((post) => {
       //   let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
       //   let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
@@ -311,12 +311,12 @@ export const goToNextRoundWithAPI = (req, res) => {
       //       }
       //     });
 
-          res.send(post);
-        }
-      })
-        .catch((error) => {
-          res.status(422).json({ error });
-        });
+      // res.send(post);
+      //  }
+      // })
+      // .catch((error) => {
+      //   res.status(422).json({ error });
+      // });
     });
 
   res.send('200');
