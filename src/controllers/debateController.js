@@ -3,6 +3,8 @@ import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
 import Notification from '../models/notificationModel';
 
+const Transloadit = require('transloadit');
+
 export const createDebate = (req, res) => {
   const debate = new Debate();
   debate.requestID = req.body.requestID;
@@ -251,20 +253,43 @@ export const goToNextRoundWithAPI = (req, res) => {
         debate.fourthVideoLength = videoLength;
         round = 4;
 
-        const data = {
+
+        // const data = {
+        //   params: {
+        //     auth: {
+        //       key: 'b4f061fc5b5948b2ad5739a92a6f092f',
+        //     },
+        //     template_id: '0d209cf1e80c473abc65e12caff9c561',
+        //     fields: {
+        //       folder_name: debate._id,
+        //     },
+        //     notify_url: `https://forum-debate.herokuapp.com/api/concatVideo/${debate._id}`,
+        //   },
+        // };
+        //
+        // console.log(data);
+        // axios.post('https://api2.transloadit.com/assemblies', data);
+
+        const transloadit = new Transloadit({
+          authKey: 'b4f061fc5b5948b2ad5739a92a6f092f',
+          authSecret: '6c0f2a84ba9e8c447311674bbff96c869fee3336',
+        });
+
+        const options = {
           params: {
-            auth: {
-              key: 'b4f061fc5b5948b2ad5739a92a6f092f',
-            },
             template_id: '0d209cf1e80c473abc65e12caff9c561',
             fields: {
               folder_name: debate._id,
             },
-            notify_url: `https://forum-debate.herokuapp.com/api/concatVideo/${debate._id}`,
           },
         };
 
-        axios.post('https://api2.transloadit.com/assemblies', data);
+        transloadit.createAssembly(options, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          console.log({ result });
+        });
 
         debate.overallStatus = 'COMPLETED';
       } else if (debate.secondVideoLink !== '') {
