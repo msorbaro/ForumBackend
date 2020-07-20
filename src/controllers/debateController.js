@@ -263,60 +263,60 @@ export const goToNextRoundWithAPI = (req, res) => {
 
       console.log(round);
 
-      return debate.save();
-      // .then((post) => {
-      //   let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
-      //   let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
-      //
-      //   if (post.personAcceptedFirst === post.person1Email) {
-      //     acceptedFirstID = post.person1ID;
-      //     acceptedSecondID = post.person2ID;
-      //   } else {
-      //     acceptedSecondID = post.person1ID;
-      //     acceptedFirstID = post.person2ID;
-      //   }
-      //
-      //   // console.log(acceptedFirstID);
-      //   // console.log(acceptedSecondID);
-      //
-      //   console.log(round);
-      //   const notification = new Notification();
-      //   if (round === 1 || round === 3) {
-      //     notification.debateID = post._id;
-      //     notification.type = 'YOUR_TURN';
-      //     notification.message = 'Its your turn to debate!';
-      //     notification.userID = acceptedSecondID;
-      //     return notification.save().then((result2) => {
-      //       res.send(post);
-      //     });
-      //   } else if (round === 2) {
-      //     notification.debateID = post._id;
-      //     notification.type = 'YOUR_TURN';
-      //     notification.message = 'Its your turn to debate!';
-      //     notification.userID = acceptedFirstID;
-      //     return notification.save().then((result2) => {
-      //       res.send(post);
-      //     });
-      //   } else {
-      //     RequestModel.findById(post.requestID).then((request) => {
-      //       console.log('found something');
-      //       for (let i = 0; i < request.requestUsers.length; i += 1) {
-      //         console.log(request.requestUsers[i]);
-      //         const notification2 = new Notification();
-      //         notification2.debateID = post._id;
-      //         notification2.userID = request.requestUsers[i].userID;
-      //         notification2.type = 'POSTED_DEBATE';
-      //         notification2.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
-      //         notification2.save();
-      //       }
-      //     });
+      return debate.save()
+        .then((post) => {
+          let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
+          let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
 
-      // res.send(post);
-      //  }
-      // })
-      // .catch((error) => {
-      //   res.status(422).json({ error });
-      // });
+          if (post.personAcceptedFirst === post.person1Email) {
+            acceptedFirstID = post.person1ID;
+            acceptedSecondID = post.person2ID;
+          } else {
+            acceptedSecondID = post.person1ID;
+            acceptedFirstID = post.person2ID;
+          }
+
+          // console.log(acceptedFirstID);
+          // console.log(acceptedSecondID);
+
+          console.log(round);
+          const notification = new Notification();
+          if (round === 1 || round === 3) {
+            notification.debateID = post._id;
+            notification.type = 'YOUR_TURN';
+            notification.message = 'Its your turn to debate!';
+            notification.userID = acceptedSecondID;
+            return notification.save().then((result2) => {
+              res.send(post);
+            });
+          } else if (round === 2) {
+            notification.debateID = post._id;
+            notification.type = 'YOUR_TURN';
+            notification.message = 'Its your turn to debate!';
+            notification.userID = acceptedFirstID;
+            return notification.save().then((result2) => {
+              res.send(post);
+            });
+          } else {
+            RequestModel.findById(post.requestID).then((request) => {
+              console.log('found something');
+              for (let i = 0; i < request.requestUsers.length; i += 1) {
+                console.log(request.requestUsers[i]);
+                const notification2 = new Notification();
+                notification2.debateID = post._id;
+                notification2.userID = request.requestUsers[i].userID;
+                notification2.type = 'POSTED_DEBATE';
+                notification2.message = `The debate you requested between ${request.person1} and ${request.person2} is posted!`;
+                notification2.save();
+              }
+            });
+
+            res.send(post);
+          }
+        })
+        .catch((error) => {
+          res.status(422).json({ error });
+        });
     });
 
   res.send('200');
