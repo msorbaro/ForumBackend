@@ -368,7 +368,13 @@ export const goToNextRoundWithAPI = (req, res) => {
             notification.message = 'Its your turn to debate!';
             notification.userID = acceptedFirstID;
             msg.to = acceptedFirstEmail;
-            sgMail.send(msg);
+            console.log(msg);
+
+            sgMail.send(msg).then((res) => {
+              console.log(res);
+            }).catch((error) => {
+              console.log(error);
+            });
 
             return notification.save();
           } else {
