@@ -3,6 +3,10 @@ import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
 import Notification from '../models/notificationModel';
 
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const Transloadit = require('transloadit');
 
 export const createDebate = (req, res) => {
@@ -313,13 +317,18 @@ export const goToNextRoundWithAPI = (req, res) => {
         .then((post) => {
           let acceptedFirstID = post.personAcceptedFirst === post.person1Email ? post.person1ID : post.person2ID;
           let acceptedSecondID = post.personAcceptedFirst === post.person2Email ? post.person1ID : post.person2ID;
-
+          let acceptedSecondEmail = '';
+          let acceptedFirstEmail = '';
           if (post.personAcceptedFirst === post.person1Email) {
             acceptedFirstID = post.person1ID;
             acceptedSecondID = post.person2ID;
+            acceptedFirstEmail = post.person1Email;
+            acceptedSecondEmail = post.person2Email;
           } else {
             acceptedSecondID = post.person1ID;
             acceptedFirstID = post.person2ID;
+            acceptedSecondEmail = post.person1Email;
+            acceptedFirstEmail = post.person2Email;
           }
 
           // console.log(acceptedFirstID);
@@ -327,17 +336,34 @@ export const goToNextRoundWithAPI = (req, res) => {
 
           // console.log(round);
           const notification = new Notification();
+
+          const msg = {
+            // to: 'recipient@example.org',
+            from: 'davidjsorbaro@gmail.com',
+            templateId: 'd-14c325a539f6419fae9ae3bf36df25ff',
+            dynamicTemplateData: {
+              // subject: 'Testing Templates',
+              // name: 'Some One',
+              link: `https://forum-breakthenews.web.app/createDebate/${post._id}`,
+            },
+          };
           if (round === 1 || round === 3) {
             notification.debateID = post._id;
             notification.type = 'YOUR_TURN';
             notification.message = 'Its your turn to debate!';
             notification.userID = acceptedSecondID;
+            msg.to = acceptedSecondEmail;
+            sgMail.send(msg);
+
             return notification.save();
           } else if (round === 2) {
             notification.debateID = post._id;
             notification.type = 'YOUR_TURN';
             notification.message = 'Its your turn to debate!';
             notification.userID = acceptedFirstID;
+            msg.to = acceptedFirstEmail;
+            sgMail.send(msg);
+
             return notification.save();
           } else {
             RequestModel.findById(post.requestID).then((request) => {

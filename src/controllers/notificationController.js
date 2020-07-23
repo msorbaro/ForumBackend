@@ -35,57 +35,57 @@ export const markNotificationAsRead = (req, res) => {
 
 export const getNewRequestNotificationsForUser = (req, res) => {
   Notification.find({
-    type: "REQUESTED",
+    type: 'REQUESTED',
     seenByUser: false,
     userID: req.body.userID,
-})
-  .then((notifications)=> {
-    res.send(notifications);
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((notifications) => {
+      res.send(notifications);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getYourTurnNotificationsForUser = (req, res) => {
   Notification.find({
-    type: "YOUR_TURN",
+    type: 'YOUR_TURN',
     seenByUser: false,
     userID: req.body.userID,
-})
-  .then((notifications)=> {
-    res.send(notifications);
   })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((notifications) => {
+      res.send(notifications);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getDashboardNotificationsForUser = (req, res) => {
   Notification.find({
     userID: req.params.id,
-    $or : [{"type":"ACCEPTED_DEBATE"}, {"type":"POSTED_DEBATE"}]
+    $or: [{ type: 'ACCEPTED_DEBATE' }, { type: 'POSTED_DEBATE' }],
   }, {})
-  .then((notifications)=> {
-    console.log(notifications)
-    res.send(notifications);
-  })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((notifications) => {
+      console.log(notifications);
+      res.send(notifications);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
 
 export const getDashboardNotificationsForUserUnseen = (req, res) => {
   Notification.find({
     userID: req.params.id,
-    seenByUser: false, 
-    $or : [{"type":"ACCEPTED_DEBATE"}, {"type":"POSTED_DEBATE"}]
+    seenByUser: false,
+    $or: [{ type: 'ACCEPTED_DEBATE' }, { type: 'POSTED_DEBATE' }],
   }, {})
-  .then((notifications)=> {
-    console.log(notifications)
-    res.send(notifications);
-  })
-  .catch((error) => {
-        res.status(422).json({ error });
-      });
+    .then((notifications) => {
+      console.log(notifications);
+      res.send(notifications);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
 };
