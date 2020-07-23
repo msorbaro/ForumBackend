@@ -121,4 +121,7 @@ router.route('/notificationDashboard/:id')
 router.route('/notificationDashboardUnseen/:id')
   .get(Notification.getDashboardNotificationsForUserUnseen);
 
+router.route('/updateProfile/:id')
+  .put(UserController.updateProfile);
+
 export default router;
