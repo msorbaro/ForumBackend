@@ -144,11 +144,29 @@ export const changePersonsDebateStatus = (req, res) => {
         notification.debateID = post._id;
         notification.type = 'YOUR_TURN';
         notification.message = 'Its your turn to debate!';
+        const msg = {
+          // to: 'recipient@example.org',
+          from: 'dsorbaro@theforum.tv',
+          templateId: 'd-14c325a539f6419fae9ae3bf36df25ff',
+          dynamicTemplateData: {
+            // subject: 'Testing Templates',
+            // name: 'Some One',
+            link: `https://forum-breakthenews.web.app/createDebate/${post._id}`,
+          },
+        };
         if (post.person1Email === post.personAcceptedFirst) {
           notification.userID = post.person1ID;
+          msg.to = post.person1Email;
         } else {
           notification.userID = post.person2ID;
+          msg.to = post.person2Email;
         }
+
+        sgMail.send(msg).then((res) => {
+          console.log(res);
+        }).catch((error) => {
+          console.log(error);
+        });
         return notification.save().then((notification) => {
           res.send(post);
         });
@@ -353,8 +371,6 @@ export const goToNextRoundWithAPI = (req, res) => {
             notification.message = 'Its your turn to debate!';
             notification.userID = acceptedSecondID;
             msg.to = acceptedSecondEmail;
-            console.log(msg);
-
             sgMail.send(msg).then((res) => {
               console.log(res);
             }).catch((error) => {
