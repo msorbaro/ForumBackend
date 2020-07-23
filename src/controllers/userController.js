@@ -144,3 +144,42 @@ export const updatePhoto = (req, res) => {
       res.status(422).json({ error });
     });
 };
+
+export const updateProfile = (req, res) => {
+  // console.log(req.params.id);
+  // console.log('ABove is ID');
+  User.findById(req.params.id)
+    .then((user) => {
+      // console.log(post);
+      // console.log('this was found');
+      if (req.body.email !== '') {
+        user.email = req.body.email;
+      }
+      if (req.body.firstName !== '') {
+        user.firstName = req.body.firstName;
+      }
+      if (req.body.lastName !== '') {
+        user.lastName = req.body.lastName;
+      }
+      if (req.body.school !== '') {
+        user.school = req.body.school;
+      }
+      if (req.body.bio !== '') {
+        user.bio = req.body.bio;
+      }
+      if (req.body.photo !== '') {
+        user.photo = req.body.photo;
+      }
+      // console.log(post.status);
+      // console.log('status after changing ^');
+      // console.log(req.body);
+      return user.save();
+    })
+    .then((post) => {
+    //  console.log('trying to send');
+      res.send(post);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
