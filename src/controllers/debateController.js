@@ -18,9 +18,8 @@ export const createDebate = (req, res) => {
     });
 };
 
-
 export const getDebates = (req, res) => {
-  Debate.find({ overallStatus: 'COMPLETED' }, null, { sort: { numRequests: -1 } }).limit(10).populate({
+  Debate.find({ overallStatus: 'FINAL' }, null, { sort: { numRequests: -1 } }).limit(10).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
@@ -449,7 +448,12 @@ export const goToNextDebateRound = (req, res) => {
 
 export const getCompletedDebatesForUser = (req, res) => {
   // console.log(req.body.email);
-  Debate.find({ $or: [{ person1Email: req.body.email, overallStatus: 'COMPLETED' }, { person2Email: req.body.email, overallStatus: 'COMPLETED' }] }).populate({
+  Debate.find({
+    $or: [
+      { person1Email: req.body.email, overallStatus: 'FINAL' },
+      { person2Email: req.body.email, overallStatus: 'FINAL' },
+    ],
+  }).populate({
     path: 'requestID',
     populate: {
       path: 'person1ID',
