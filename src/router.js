@@ -97,6 +97,9 @@ router.route('/section3DebateLikes/:id')
 router.route('/section4DebateLikes/:id')
   .put(DebateLike.getSection4Likes);
 
+router.route('/allDebateLikes/:id')
+  .put(DebateLike.getAllVideoLikes);
+
 router.route('/addDebateView/:id')
   .put(Debate.addView);
 

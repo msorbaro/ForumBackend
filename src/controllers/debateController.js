@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Debate from '../models/debateModel';
 import RequestModel from '../models/requestModel';
 import Notification from '../models/notificationModel';
@@ -484,7 +484,6 @@ export const addDebateVote = (req, res) => {
       post.videoLikes.push({
         email: req.body.email,
         date: new Date(),
-        section: req.body.section,
         time: req.body.time,
       });
 
@@ -536,7 +535,6 @@ export const addDebateVote = (req, res) => {
 //       res.status(422).json({ error });
 //     });
 // };
-
 
 export const getSection1Likes = (req, res) => {
   Debate.find({

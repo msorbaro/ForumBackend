@@ -6,7 +6,7 @@ export const createDebateLike = (req, res) => {
   const debateLike = new DebateLike();
   debateLike.videoTime = req.body.videoTime;
   debateLike.debateID = req.body.debateID;
-  debateLike.videoSection = req.body.videoSection;
+  // debateLike.videoSection = req.body.videoSection;
   debateLike.likerID = req.body.likerID;
 
   debateLike.save()
@@ -23,7 +23,7 @@ export const createDebateLike = (req, res) => {
     //  console.log(error);
     });
 };
-// 
+//
 // export const getAllDebateLikes = (req, res) => {
 //   DebateLike.find({
 //     debateID: req.params.id,
@@ -35,6 +35,18 @@ export const createDebateLike = (req, res) => {
 //       res.status(422).json({ error });
 //     });
 // };
+
+export const getAllVideoLikes = (req, res) => {
+  DebateLike.find({
+    debateID: req.params.id,
+  })
+    .then((debates) => {
+      res.send(debates);
+    })
+    .catch((error) => {
+      res.status(422).json({ error });
+    });
+};
 
 export const getSection4Likes = (req, res) => {
   DebateLike.find({

@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose';
 const DebateLikeSchema = new Schema({
   videoTime: Number,
   debateID: { type: Schema.Types.ObjectId, ref: 'Debate' },
-  videoSection: Number,
+  // videoSection: Number,
   date: { type: Date, default: Date.now },
   likerID: { type: Schema.Types.ObjectId, ref: 'User' },
 });
