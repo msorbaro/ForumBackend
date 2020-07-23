@@ -339,7 +339,7 @@ export const goToNextRoundWithAPI = (req, res) => {
 
           const msg = {
             // to: 'recipient@example.org',
-            from: 'davidjsorbaro@gmail.com',
+            from: 'dsorbaro@theforum.tv',
             templateId: 'd-14c325a539f6419fae9ae3bf36df25ff',
             dynamicTemplateData: {
               // subject: 'Testing Templates',
