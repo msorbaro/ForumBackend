@@ -279,7 +279,7 @@ export const goToNextRoundWithAPI = (req, res) => {
             fields: {
               folder_name: debate._id,
             },
-            notify_url: `https://forum-debate.herokuapp.com/api/addConcatVidLink/${this.props.debateID}`,
+            notify_url: `https://forum-debate.herokuapp.com/api/addConcatVidLink/${debate._id}`,
           },
         };
 
