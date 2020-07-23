@@ -15,10 +15,12 @@ const DebateSchema = new Schema({
   secondVideoLink: { type: String, default: '' },
   thirdVideoLink: { type: String, default: '' },
   fourthVideoLink: { type: String, default: '' },
+  finalVideoLink: { type: String, default: '' },
   firstVideoLength: { type: Number, default: 0 },
   secondVideoLength: { type: Number, default: 0 },
   thirdVideoLength: { type: Number, default: 0 },
   fourthVideoLength: { type: Number, default: 0 },
+  finalVideoLength: { type: Number, default: 0 },
   videoViews: { type: Number, default: 0 },
   totalVideoLikes: { type: Number, default: 0 },
   videoLikes: [{

@@ -229,6 +229,21 @@ export const getOneDebate = (req, res) => {
     });
 };
 
+export const addConcatVidLink = (req, res) => {
+  const jsonresult = JSON.parse(req.body.transloadit);
+  const debateID = req.params.id;
+
+  Debate.findById(debateID)
+    .then((debate) => {
+      debate.overallStatus = 'FINAL';
+      debate.finalVideoLink = jsonresult.results.concatenate_videos[0].ssl_url;
+      debate.finalVideoLength = jsonresult.results.concatenate_videos[0].meta.duration;
+      return debate.save();
+    });
+  res.send('200');
+};
+
+
 export const concatVideoFinished = (req, res) => {
   console.log('Made this here');
   const jsonresult = JSON.parse(req.body.transloadit);
@@ -253,23 +268,6 @@ export const goToNextRoundWithAPI = (req, res) => {
         debate.fourthVideoLength = videoLength;
         round = 4;
 
-
-        // const data = {
-        //   params: {
-        //     auth: {
-        //       key: 'b4f061fc5b5948b2ad5739a92a6f092f',
-        //     },
-        //     template_id: '0d209cf1e80c473abc65e12caff9c561',
-        //     fields: {
-        //       folder_name: debate._id,
-        //     },
-        //     notify_url: `https://forum-debate.herokuapp.com/api/concatVideo/${debate._id}`,
-        //   },
-        // };
-        //
-        // console.log(data);
-        // axios.post('https://api2.transloadit.com/assemblies', data);
-
         const transloadit = new Transloadit({
           authKey: 'b4f061fc5b5948b2ad5739a92a6f092f',
           authSecret: '6c0f2a84ba9e8c447311674bbff96c869fee3336',
@@ -281,6 +279,7 @@ export const goToNextRoundWithAPI = (req, res) => {
             fields: {
               folder_name: debate._id,
             },
+            notify_url: `https://forum-debate.herokuapp.com/api/addConcatVidLink/${this.props.debateID}`,
           },
         };
 
