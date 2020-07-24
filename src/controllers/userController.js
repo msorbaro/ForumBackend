@@ -170,6 +170,9 @@ export const updateProfile = (req, res) => {
       if (req.body.photo !== '') {
         user.photo = req.body.photo;
       }
+      if (req.body.status !== '') {
+        user.status = req.body.status;
+      }
       // console.log(post.status);
       // console.log('status after changing ^');
       // console.log(req.body);
