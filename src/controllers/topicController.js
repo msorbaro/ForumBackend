@@ -14,7 +14,7 @@ export const createTopic = (req, res) => {
 };
 
 export const getTopTen = (req, res) => {
-  Topic.find().sort({ dateLastRequested: -1 }).limit(10)
+  Topic.find().sort({ dateLastRequested: 1 }).limit(10)
     .then((topics) => {
       res.send(topics);
     })
