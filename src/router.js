@@ -4,6 +4,7 @@ import * as UserController from './controllers/userController';
 import * as Debate from './controllers/debateController';
 import * as DebateLike from './controllers/debateLikeController';
 import * as Notification from './controllers/notificationController';
+import * as Topic from './controllers/topicController';
 
 import { requireSignin } from './services/passport';
 import signS3 from './services/s3';
@@ -123,5 +124,9 @@ router.route('/notificationDashboardUnseen/:id')
 
 router.route('/updateProfile/:id')
   .put(UserController.updateProfile);
+
+router.route('/topics/')
+  .post(Topic.createTopic)
+  .get(Topic.getTopTen);
 
 export default router;
