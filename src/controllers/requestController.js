@@ -52,14 +52,14 @@ export const createRequestNew = (req, res) => {
         post.numRequests = 1;
         post.topic = req.body.topic;
         post.person1 = req.body.person1;
-        User.findById(req.body.person1)
+        User.findById(req.body.person1ID)
           .then((person1ID) => {
             person1ID.mostRecentlyRequestedDate = Date.now;
             person1ID.save();
           });
         post.person2 = req.body.person2;
         console.log(req.body.person2);
-        User.findById(req.body.person2)
+        User.findById(req.body.person2ID)
           .then((person2ID) => {
             console.log('HERE');
             console.log(Date.now);
