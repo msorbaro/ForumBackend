@@ -1,6 +1,7 @@
 import RequestModel from '../models/requestModel';
 import Debate from '../models/debateModel';
 import Notification from '../models/notificationModel';
+import User from '../models/userModel';
 
 //
 // export const createRequest = (req, res) => {
@@ -51,7 +52,17 @@ export const createRequestNew = (req, res) => {
         post.numRequests = 1;
         post.topic = req.body.topic;
         post.person1 = req.body.person1;
+        User.findById(req.body.person1)
+          .then((person1ID) => {
+            person1ID.mostRecentlyRequestedDate = Date.now;
+            person1ID.save();
+          });
         post.person2 = req.body.person2;
+        User.findById(req.body.person2)
+          .then((person2ID) => {
+            person2ID.mostRecentlyRequestedDate = Date.now;
+            person2ID.save();
+          });
         post.date = new Date();
         post.person1Email = req.body.person1Email;
         post.person2Email = req.body.person2Email;
@@ -65,6 +76,7 @@ export const createRequestNew = (req, res) => {
             const debate = new Debate();
             // console.log('I am now trying to get the debate ID');
             // console.log(result._id);
+
             debate.requestID = result._id;
             debate.person1Email = result.person1Email;
             debate.person2Email = result.person2Email;

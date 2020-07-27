@@ -80,7 +80,7 @@ export const getPendingStatus = (req, res) => {
 };
 
 export const getApprovedUsers = (req, res) => {
-  User.find({ status: 'APPROVED' })
+  User.find({ status: 'APPROVED' }).sort({ mostRecentlyRequestedDate: -1 }).limit(10)
     .then((post) => {
       res.json(post);
     })
@@ -88,6 +88,10 @@ export const getApprovedUsers = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
+// export const updateRecentlyAcceptedDate = (req, res) => {
+//   user
+// }
 
 export const getUserByEmail = (req, res) => {
   // console.log(req.body);
