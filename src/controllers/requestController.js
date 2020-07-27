@@ -60,6 +60,8 @@ export const createRequestNew = (req, res) => {
         post.person2 = req.body.person2;
         User.findById(req.body.person2)
           .then((person2ID) => {
+            console.log('HERE');
+            console.log(Date.now);
             person2ID.mostRecentlyRequestedDate = Date.now;
             person2ID.save();
           });
