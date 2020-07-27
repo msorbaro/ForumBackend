@@ -3,6 +3,10 @@ import Debate from '../models/debateModel';
 import Notification from '../models/notificationModel';
 import User from '../models/userModel';
 
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 //
 // export const createRequest = (req, res) => {
 //   const post = new RequestModel();
@@ -85,10 +89,35 @@ export const createRequestNew = (req, res) => {
             debate.person2Email = result.person2Email;
             debate.person1ID = result.person1ID;
             debate.person2ID = result.person2ID;
+
+            const msg1 = {
+              from: 'dsorbaro@theforum.tv',
+              templateId: 'd-93185f803f6b41cd883438b4705ac321',
+              to: result.person1Email,
+            };
+
+            const msg2 = {
+              from: 'dsorbaro@theforum.tv',
+              templateId: 'd-93185f803f6b41cd883438b4705ac321',
+              to: result.person2Email,
+            };
+
+            sgMail.send(msg1).then((res) => {
+              console.log(res);
+            }).catch((error) => {
+              console.log(error);
+            });
+
+            sgMail.send(msg2).then((res) => {
+              console.log(res);
+            }).catch((error) => {
+              console.log(error);
+            });
+
             return debate.save()
               .then((result2) => {
-                console.log(result);
-                console.log(result2);
+                // console.log(result);
+                // console.log(result2);
                 const notification1 = new Notification();
                 notification1.debateID = result2._id;
                 notification1.type = 'REQUESTED';
