@@ -54,7 +54,7 @@ export const createRequestNew = (req, res) => {
         post.person1 = req.body.person1;
         User.findById(req.body.person1ID)
           .then((person1ID) => {
-            person1ID.mostRecentlyRequestedDate = Date.now;
+            person1ID.mostRecentlyRequestedDate = new Date();
             person1ID.save();
           });
         post.person2 = req.body.person2;
@@ -63,7 +63,7 @@ export const createRequestNew = (req, res) => {
           .then((person2ID) => {
             console.log('HERE');
             console.log(Date.now);
-            person2ID.mostRecentlyRequestedDate = Date.now;
+            person2ID.mostRecentlyRequestedDate = new Date();
             person2ID.save();
           });
         post.date = new Date();
