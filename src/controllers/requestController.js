@@ -58,6 +58,7 @@ export const createRequestNew = (req, res) => {
             person1ID.save();
           });
         post.person2 = req.body.person2;
+        console.log(req.body.person2);
         User.findById(req.body.person2)
           .then((person2ID) => {
             console.log('HERE');
