@@ -91,13 +91,13 @@ export const createRequestNew = (req, res) => {
             debate.person2ID = result.person2ID;
 
             const msg1 = {
-              from: 'dsorbaro@theforum.tv',
+              from: 'theforumnotifications@gmail.com',
               templateId: 'd-93185f803f6b41cd883438b4705ac321',
               to: result.person1Email,
             };
 
             const msg2 = {
-              from: 'dsorbaro@theforum.tv',
+              from: 'theforumnotifications@gmail.com',
               templateId: 'd-93185f803f6b41cd883438b4705ac321',
               to: result.person2Email,
             };
