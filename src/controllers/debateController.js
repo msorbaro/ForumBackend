@@ -68,7 +68,7 @@ export const getPendingDebatesForUser = (req, res) => {
 export const sendContactForm = (req, res) => {
   const msg = {
     // to: 'recipient@example.org',
-    from: 'theforumnotifications@gmail.com',
+    from: 'notifications@theforum.tv',
     templateId: 'd-1d7ffd12092e4579b4655a641e4ddb49',
     dynamicTemplateData: {
       name: req.body.name,
