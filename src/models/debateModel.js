@@ -29,6 +29,7 @@ const DebateSchema = new Schema({
     section: Number,
     time: Number,
   }],
+  date: { type: Date, default: Date.now },
 });
 
 DebateSchema.set('toJSON', {

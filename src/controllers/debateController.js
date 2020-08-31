@@ -439,7 +439,7 @@ export const goToNextDebateRound = (req, res) => {
       //  console.log('went to round 4');
         post.fourthVideoLink = req.body.link;
         post.fourthVideoLength = req.body.videoLength;
-
+        post.date = Date.now;
         post.overallStatus = 'COMPLETED';
       }
 
