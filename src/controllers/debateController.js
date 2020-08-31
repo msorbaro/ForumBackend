@@ -84,6 +84,8 @@ export const sendContactForm = (req, res) => {
   }).catch((error) => {
     console.log(error);
   });
+
+  res.send('sent');
 };
 
 export const changePersonsDebateStatus = (req, res) => {
