@@ -312,6 +312,7 @@ export const goToNextRoundWithAPI = (req, res) => {
         });
 
         debate.overallStatus = 'COMPLETED';
+        debate.date = Date.now;
       } else if (debate.secondVideoLink !== '') {
       //  console.log('went to round 3');
         debate.thirdVideoLink = videoLink;
