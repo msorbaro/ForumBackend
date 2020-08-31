@@ -65,6 +65,26 @@ export const getPendingDebatesForUser = (req, res) => {
     });
 };
 
+export const sendContactForm = (req, res) => {
+  const msg = {
+    // to: 'recipient@example.org',
+    from: 'theforumnotifications@gmail.com',
+    templateId: 'd-1d7ffd12092e4579b4655a641e4ddb49',
+    dynamicTemplateData: {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      message: req.body.message,
+    },
+    to: 'davidjsorbaro@gmail.com',
+  };
+
+  sgMail.send(msg).then((res) => {
+    console.log(res);
+  }).catch((error) => {
+    console.log(error);
+  });
+};
 
 export const changePersonsDebateStatus = (req, res) => {
   // console.log(req.params.id);

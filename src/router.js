@@ -129,4 +129,7 @@ router.route('/topics/')
   .post(Topic.createTopic)
   .get(Topic.getTopTen);
 
+router.route('/sendContactForm')
+  .post(Debate.sendContactForm);
+
 export default router;
