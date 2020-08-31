@@ -132,4 +132,7 @@ router.route('/topics/')
 router.route('/sendContactForm')
   .post(Debate.sendContactForm);
 
+router.route('/sendNewUserForm')
+  .post(Debate.sendNewUserForm);
+
 export default router;

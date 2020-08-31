@@ -88,6 +88,28 @@ export const sendContactForm = (req, res) => {
   res.send('sent');
 };
 
+
+export const sendNewUserForm = (req, res) => {
+  const msg = {
+    // to: 'recipient@example.org',
+    from: 'notifications@theforum.tv',
+    templateId: 'd-b3c94b0e4e974360b4a9c5cddb7f98c8',
+    dynamicTemplateData: {
+      info: req.body.info,
+    },
+    to: 'davidjsorbaro@gmail.com',
+  };
+
+  sgMail.send(msg).then((res) => {
+    console.log(res);
+  }).catch((error) => {
+    console.log(error);
+  });
+
+  res.send('sent');
+};
+
+
 export const changePersonsDebateStatus = (req, res) => {
   // console.log(req.params.id);
   // console.log('here');
