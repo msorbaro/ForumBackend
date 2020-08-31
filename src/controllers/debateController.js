@@ -168,7 +168,7 @@ export const changePersonsDebateStatus = (req, res) => {
         notification.message = 'Its your turn to debate!';
         const msg = {
           // to: 'recipient@example.org',
-          from: 'theforumnotifications@gmail.com',
+          from: 'notifications@theforum.tv',
           templateId: 'd-14c325a539f6419fae9ae3bf36df25ff',
           dynamicTemplateData: {
             // subject: 'Testing Templates',
@@ -380,7 +380,7 @@ export const goToNextRoundWithAPI = (req, res) => {
 
           const msg = {
             // to: 'recipient@example.org',
-            from: 'theforumnotifications@gmail.com',
+            from: 'notifications@theforum.tv',
             templateId: 'd-14c325a539f6419fae9ae3bf36df25ff',
             dynamicTemplateData: {
               // subject: 'Testing Templates',
